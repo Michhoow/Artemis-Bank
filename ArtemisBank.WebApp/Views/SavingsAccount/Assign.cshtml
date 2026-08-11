@@ -1,0 +1,43 @@
+@model AssignSavingsAccountViewModel
+@{ ViewData["Title"] = "Asignar cuenta de ahorro"; }
+
+<h1 class="h4 mb-3">Configurar cuenta de ahorro secundaria</h1>
+
+<div class="card shadow-sm" style="max-width:640px">
+    <div class="card-body">
+        <dl class="row mb-3">
+            <dt class="col-sm-4">Cliente</dt><dd class="col-sm-8">@Model.ClientFullName</dd>
+            <dt class="col-sm-4">Cédula</dt><dd class="col-sm-8">@Model.Identification</dd>
+            <dt class="col-sm-4">Tipo de cuenta</dt><dd class="col-sm-8">Secundaria</dd>
+        </dl>
+
+        <form method="post" asp-action="Assign">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="ClientId" />
+            <input type="hidden" asp-for="ClientFullName" />
+            <input type="hidden" asp-for="Identification" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+            <div class="mb-3">
+                <label class="form-label" asp-for="InitialBalance"></label>
+                <div class="input-group">
+                    <span class="input-group-text">RD$</span>
+                    <input class="form-control" asp-for="InitialBalance" type="number" step="0.01" min="0" />
+                </div>
+                <span asp-validation-for="InitialBalance" class="text-danger"></span>
+                <div class="form-text">
+                    Puede ser RD$0.00. Todo balance inicial mayor que cero se registra como una
+                    transacción de tipo CRÉDITO.
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Asignar</button>
+                <a class="btn btn-outline-secondary" asp-action="SelectClient">Volver atrás</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

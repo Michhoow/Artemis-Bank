@@ -1,0 +1,6 @@
+:root { --artemis-primary: #0f3d63; }
+.navbar-dark.bg-dark { background-color: var(--artemis-primary) !important; }
+.card-indicator { border: none; border-left: 4px solid var(--artemis-primary); }
+.card-indicator .value { font-size: 1.6rem; font-weight: 600; color: var(--artemis-primary); }
+.card-indicator .label { font-size: .8rem; color: #6b7280; text-transform: uppercase; letter-spacing: .03em; }
+.table > :not(caption) > * > * { padding: .6rem .75rem; }

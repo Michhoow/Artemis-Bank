@@ -1,0 +1,24 @@
+@model AccountTransactionsViewModel
+@{ ViewData["Title"] = "Detalle de cuenta"; }
+
+<h1 class="h4 mb-3">Transacciones de la cuenta @Model.AccountNumber</h1>
+
+<div class="card card-body shadow-sm mb-3">
+    <dl class="row mb-0">
+        <dt class="col-sm-3">Cliente</dt><dd class="col-sm-3">@Model.ClientFullName</dd>
+        <dt class="col-sm-3">Balance</dt><dd class="col-sm-3">RD$@Model.Balance.ToString("N2")</dd>
+        <dt class="col-sm-3">Tipo de cuenta</dt><dd class="col-sm-3">@Model.Type</dd>
+        <dt class="col-sm-3">Estado</dt><dd class="col-sm-3">@Model.Status</dd>
+    </dl>
+</div>
+
+<partial name="_TransactionsTable" model="Model.Transactions" />
+
+@{
+    var pager = ArtemisBank.Core.Application.ViewModels.PagerViewModel.For(
+        Model.Transactions.Page, Model.Transactions.TotalPages, "Details", "SavingsAccount",
+        new Dictionary<string, string> { ["accountNumber"] = Model.AccountNumber });
+}
+<partial name="_Pager" model="pager" />
+
+<a class="btn btn-outline-secondary mt-3" asp-action="Index">Volver atrás</a>

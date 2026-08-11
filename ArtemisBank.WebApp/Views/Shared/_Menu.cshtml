@@ -1,0 +1,64 @@
+@{
+    var role = User.IsInRole(ArtemisRoles.Administrador) ? ArtemisRoles.Administrador
+             : User.IsInRole(ArtemisRoles.Cajero) ? ArtemisRoles.Cajero
+             : User.IsInRole(ArtemisRoles.Cliente) ? ArtemisRoles.Cliente
+             : string.Empty;
+}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-semibold" asp-controller="Home" asp-action="Index">
+            <i class="bi bi-bank2 me-1"></i> Artemis Banking Pro
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainMenu">
+            <ul class="navbar-nav me-auto">
+                @if (role == ArtemisRoles.Administrador)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="AdminHome" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Index">Gestión de usuarios</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Loan" asp-action="Index">Gestión de préstamos</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="CreditCard" asp-action="Index">Gestión de tarjetas de crédito</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="SavingsAccount" asp-action="Index">Gestión de cuentas de ahorro</a></li>
+                }
+                else if (role == ArtemisRoles.Cajero)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Cashier" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Cashier" asp-action="Deposit">Depósito</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Cashier" asp-action="Withdrawal">Retiro</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Cashier" asp-action="CardPayment">Pago a tarjeta de crédito</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Cashier" asp-action="LoanPayment">Pago a préstamo</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Cashier" asp-action="ThirdParty">Transacciones a cuentas de terceros</a></li>
+                }
+                else if (role == ArtemisRoles.Cliente)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="ClientHome" asp-action="Index">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Transacciones</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Express">Express</a></li>
+                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="CreditCard">Tarjeta de crédito</a></li>
+                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Loan">Préstamo</a></li>
+                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Beneficiaries">Beneficiarios</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Beneficiary" asp-action="Index">Beneficiarios</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="CashAdvance" asp-action="Index">Avance de efectivo</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Transfer" asp-action="Index">Transferencia</a></li>
+                }
+            </ul>
+
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <span class="navbar-text text-white-50 me-3 small">
+                    @User.Identity!.Name — @role
+                </span>
+                <a class="btn btn-outline-light btn-sm" asp-controller="Login" asp-action="SignOutSession">
+                    Cerrar sesión
+                </a>
+            }
+        </div>
+    </div>
+</nav>

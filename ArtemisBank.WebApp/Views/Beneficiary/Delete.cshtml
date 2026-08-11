@@ -1,0 +1,20 @@
+@model BeneficiaryViewModel
+@{ ViewData["Title"] = "Eliminar beneficiario"; }
+
+<div class="card shadow-sm" style="max-width:560px">
+    <div class="card-body">
+        <h1 class="h5 mb-3">@AppMessages.ConfirmDeleteBeneficiary</h1>
+        <dl class="row">
+            <dt class="col-sm-4">Beneficiario</dt><dd class="col-sm-8">@Model.FullName</dd>
+            <dt class="col-sm-4">Número de cuenta</dt><dd class="col-sm-8">@Model.AccountNumber</dd>
+        </dl>
+        <form method="post" asp-action="Delete">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger">Aceptar</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

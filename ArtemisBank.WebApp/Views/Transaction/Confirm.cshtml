@@ -1,0 +1,31 @@
+@model ConfirmTransactionViewModel
+@{ ViewData["Title"] = "Confirmar transacción"; }
+
+<div class="card shadow-sm" style="max-width:640px">
+    <div class="card-body">
+        <h1 class="h5 mb-3">@AppMessages.ConfirmTransaction</h1>
+
+        <dl class="row">
+            <dt class="col-sm-5">Titular de la cuenta destino</dt>
+            <dd class="col-sm-7">@Model.TargetOwnerFullName</dd>
+            <dt class="col-sm-5">Número de cuenta destino</dt>
+            <dd class="col-sm-7 font-monospace">@Model.TargetAccountNumber</dd>
+            <dt class="col-sm-5">Monto a transferir</dt>
+            <dd class="col-sm-7 fw-semibold">RD$@Model.Amount.ToString("N2")</dd>
+        </dl>
+
+        <form method="post" asp-action="Confirm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Mode" />
+            <input type="hidden" asp-for="BeneficiaryId" />
+            <input type="hidden" asp-for="SourceAccountNumber" />
+            <input type="hidden" asp-for="TargetAccountNumber" />
+            <input type="hidden" asp-for="Amount" />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+                <a class="btn btn-outline-secondary" asp-controller="ClientHome" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

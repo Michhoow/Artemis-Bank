@@ -1,0 +1,100 @@
+@model SavingsAccountIndexViewModel
+@{ ViewData["Title"] = "Gestión de cuentas de ahorro"; }
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Gestión de cuentas de ahorro</h1>
+    <a class="btn btn-primary" asp-action="SelectClient">
+        <i class="bi bi-plus-lg me-1"></i> Asignar cuenta de ahorro
+    </a>
+</div>
+
+<form method="get" class="card card-body shadow-sm mb-3">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label" for="identification">Cédula del cliente</label>
+            <input id="identification" name="identification" class="form-control" value="@Model.Identification"
+                   placeholder="00187654321" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="status">Estado</label>
+            <select id="status" name="status" class="form-select">
+                <option value="activa" selected="@(Model.Status == "activa")">Activas</option>
+                <option value="cancelada" selected="@(Model.Status == "cancelada")">Canceladas</option>
+                <option value="todas" selected="@(Model.Status == "todas")">Todas</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="type">Tipo</label>
+            <select id="type" name="type" class="form-select">
+                <option value="todas" selected="@(Model.Type == "todas")">Todas</option>
+                <option value="principal" selected="@(Model.Type == "principal")">Principal</option>
+                <option value="secundaria" selected="@(Model.Type == "secundaria")">Secundaria</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.InfoMessage))
+{
+    <div class="alert alert-info">@Model.InfoMessage</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>Número de cuenta</th>
+                <th>Cliente</th>
+                <th class="text-end">Balance</th>
+                <th>Tipo de cuenta</th>
+                <th>Estado</th>
+                <th class="text-end">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Accounts.Data.Any())
+        {
+            <tr><td colspan="6" class="text-center text-secondary py-4">No hay cuentas para mostrar.</td></tr>
+        }
+        else
+        {
+            @foreach (var account in Model.Accounts.Data)
+            {
+                <tr>
+                    <td class="font-monospace">@account.AccountNumber</td>
+                    <td>@account.ClientFullName<br /><span class="text-secondary small">@account.Identification</span></td>
+                    <td class="text-end fw-semibold">RD$@account.Balance.ToString("N2")</td>
+                    <td>@account.Type</td>
+                    <td>
+                        <span class="badge @(account.IsActive ? "bg-success" : "bg-secondary")">@account.Status</span>
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           asp-action="Details" asp-route-accountNumber="@account.AccountNumber">Ver detalles</a>
+                        @if (account.CanBeCancelled)
+                        {
+                            <a class="btn btn-sm btn-outline-danger"
+                               asp-action="Cancel" asp-route-accountNumber="@account.AccountNumber">Cancelar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var pager = ArtemisBank.Core.Application.ViewModels.PagerViewModel.For(
+        Model.Accounts.Page, Model.Accounts.TotalPages, "Index", "SavingsAccount",
+        new Dictionary<string, string>
+        {
+            ["identification"] = Model.Identification ?? string.Empty,
+            ["status"] = Model.Status,
+            ["type"] = Model.Type
+        });
+}
+<partial name="_Pager" model="pager" />

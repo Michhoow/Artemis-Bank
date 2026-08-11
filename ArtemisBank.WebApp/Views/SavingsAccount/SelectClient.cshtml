@@ -1,0 +1,73 @@
+@model SelectClientViewModel
+@{ ViewData["Title"] = "Seleccionar cliente"; }
+
+<h1 class="h4 mb-3">Asignar cuenta de ahorro — seleccione el cliente</h1>
+
+<form method="get" class="card card-body shadow-sm mb-3">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-6">
+            <label class="form-label" for="search">Buscar por cédula</label>
+            <input id="search" name="search" class="form-control" value="@Model.Search" />
+        </div>
+        <div class="col-md-2 d-grid">
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+
+<form method="post" asp-action="SelectClient">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="Search" value="@Model.Search" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+    <span asp-validation-for="ClientId" class="text-danger"></span>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-light">
+                <tr>
+                    <th style="width:3rem"></th>
+                    <th>Cédula</th>
+                    <th>Nombre y apellido</th>
+                    <th>Correo electrónico</th>
+                    <th class="text-end">Monto total de deuda</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (!Model.Clients.Any())
+            {
+                <tr><td colspan="5" class="text-center text-secondary py-4">No hay clientes activos para mostrar.</td></tr>
+            }
+            else
+            {
+                @foreach (var client in Model.Clients)
+                {
+                    <tr>
+                        <td>
+                            <input class="form-check-input" type="radio" name="ClientId" value="@client.ClientId"
+                                   checked="@(Model.ClientId == client.ClientId)" />
+                        </td>
+                        <td class="font-monospace">@client.Identification</td>
+                        <td>
+                            @client.FullName
+                            @if (!client.HasActivePrincipalAccount)
+                            {
+                                <span class="badge bg-warning text-dark ms-1">Sin cuenta principal activa</span>
+                            }
+                        </td>
+                        <td>@client.Email</td>
+                        <td class="text-end">RD$@client.TotalDebt.ToString("N2")</td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Siguiente paso</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
+    </div>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

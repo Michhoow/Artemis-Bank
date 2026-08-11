@@ -1,0 +1,88 @@
+@model ClientHomeViewModel
+@{ ViewData["Title"] = "Home del cliente"; }
+
+<h1 class="h4 mb-4">Mis productos financieros</h1>
+
+@if (!Model.HasAnyProduct)
+{
+    <div class="alert alert-info">@AppMessages.NoActiveFinancialProducts</div>
+}
+
+@if (Model.HasSavingsAccounts)
+{
+    <h2 class="h6 text-uppercase text-secondary mb-2">Cuentas de ahorro</h2>
+    <div class="row g-3 mb-4">
+        @foreach (var account in Model.SavingsAccounts)
+        {
+            <div class="col-md-6 col-xl-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <span class="font-monospace">@account.AccountNumber</span>
+                            <span class="badge bg-secondary">@account.Type</span>
+                        </div>
+                        <div class="fs-4 fw-semibold mt-2">RD$@account.Balance.ToString("N2")</div>
+                        <a class="btn btn-sm btn-outline-primary mt-3"
+                           asp-action="AccountDetails" asp-route-accountNumber="@account.AccountNumber">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@if (Model.HasLoans)
+{
+    <h2 class="h6 text-uppercase text-secondary mb-2">Préstamos</h2>
+    <div class="table-responsive mb-4">
+        <table class="table table-hover align-middle bg-white">
+            <thead class="table-light">
+                <tr>
+                    <th>Número</th><th class="text-end">Capital aprobado</th><th>Cuotas</th>
+                    <th class="text-end">Monto pendiente</th><th>Tasa anual</th><th>Plazo</th><th>Estado</th><th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var loan in Model.Loans)
+            {
+                <tr>
+                    <td class="font-monospace">@loan.LoanNumber</td>
+                    <td class="text-end">RD$@loan.ApprovedCapital.ToString("N2")</td>
+                    <td>@loan.PaidInstallments / @loan.TotalInstallments</td>
+                    <td class="text-end">RD$@loan.PendingAmount.ToString("N2")</td>
+                    <td>@loan.AnnualInterestRate.ToString("N2")%</td>
+                    <td>@loan.TermInMonths meses</td>
+                    <td><span class="badge @(loan.Status == "En mora" ? "bg-danger" : "bg-success")">@loan.Status</span></td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Loan" asp-action="Details" asp-route-id="@loan.Id">Ver detalles</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (Model.HasCreditCards)
+{
+    <h2 class="h6 text-uppercase text-secondary mb-2">Tarjetas de crédito</h2>
+    <div class="row g-3">
+        @foreach (var card in Model.CreditCards)
+        {
+            <div class="col-md-6 col-xl-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        @* Nunca se muestra el numero completo de la tarjeta. *@
+                        <div class="font-monospace">@card.MaskedNumber</div>
+                        <div class="small text-secondary">Expira @card.ExpirationDate</div>
+                        <div class="mt-2">Límite: RD$@card.CreditLimit.ToString("N2")</div>
+                        <div class="fw-semibold">Adeudado: RD$@card.Debt.ToString("N2")</div>
+                        <a class="btn btn-sm btn-outline-primary mt-3"
+                           asp-controller="CreditCard" asp-action="Details" asp-route-id="@card.Id">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

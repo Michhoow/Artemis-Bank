@@ -1,0 +1,16 @@
+@model ArtemisBank.WebApp.Models.ErrorViewModel
+@{ ViewData["Title"] = "Error"; }
+
+<div class="text-center py-5">
+    <i class="bi bi-exclamation-octagon display-4 text-warning"></i>
+    <h1 class="h4 mt-3">Ocurrió un error (@Model.StatusCode)</h1>
+    <p class="text-secondary">
+        La operación no pudo completarse. Si el problema persiste, comparta este identificador
+        con el equipo de soporte.
+    </p>
+    @if (Model.ShowRequestId)
+    {
+        <p class="font-monospace small">@Model.RequestId</p>
+    }
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Volver al inicio</a>
+</div>

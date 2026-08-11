@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Iniciar sesión";
+    var devEnabled = (bool?)ViewBag.DevLoginEnabled ?? false;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="h5 mb-3">Artemis Banking Pro</h1>
+
+                <div class="alert alert-secondary small">
+                    El login definitivo (validación de credenciales, activación de cuenta y
+                    restablecimiento de contraseña) corresponde al módulo de seguridad y aún no está
+                    integrado en esta rama.
+                </div>
+
+                @if (devEnabled)
+                {
+                    <form method="post" asp-action="DevSignIn">
+                        @Html.AntiForgeryToken()
+                        <label class="form-label" for="userId">Acceso de desarrollo</label>
+                        <select id="userId" name="userId" class="form-select mb-3">
+                            @foreach (var user in ArtemisBank.Core.Application.Services.Pending.DemoDirectory.Users
+                                .Where(u => u.IsActive))
+                            {
+                                <option value="@user.Id">@user.UserName — @user.Role</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

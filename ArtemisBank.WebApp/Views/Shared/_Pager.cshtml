@@ -1,0 +1,15 @@
+@model ArtemisBank.Core.Application.ViewModels.PagerViewModel
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Paginación">
+        <ul class="pagination pagination-sm justify-content-center mt-3">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" asp-controller="@Model.Controller" asp-action="@Model.Action"
+                       asp-all-route-data="Model.RouteValuesFor(i)">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

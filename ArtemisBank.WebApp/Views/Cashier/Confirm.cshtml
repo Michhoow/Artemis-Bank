@@ -1,0 +1,74 @@
+@model CashierConfirmViewModel
+@{ ViewData["Title"] = Model.Title; }
+
+<div class="card shadow-sm" style="max-width:680px">
+    <div class="card-body">
+        <h1 class="h5 mb-3">@Model.ConfirmationMessage</h1>
+
+        <dl class="row">
+            @if (!string.IsNullOrEmpty(Model.SourceAccountNumber))
+            {
+                <dt class="col-sm-5">Titular de la cuenta origen</dt>
+                <dd class="col-sm-7">@Model.SourceOwnerFullName</dd>
+                <dt class="col-sm-5">Número de cuenta origen</dt>
+                <dd class="col-sm-7 font-monospace">@Model.SourceAccountNumber</dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.TargetAccountNumber))
+            {
+                <dt class="col-sm-5">Titular de la cuenta destino</dt>
+                <dd class="col-sm-7">@Model.TargetOwnerFullName</dd>
+                <dt class="col-sm-5">Número de cuenta destino</dt>
+                <dd class="col-sm-7 font-monospace">@Model.TargetAccountNumber</dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.CardLastFour))
+            {
+                <dt class="col-sm-5">Titular de la tarjeta</dt>
+                <dd class="col-sm-7">@Model.CardOwnerFullName</dd>
+                <dt class="col-sm-5">Tarjeta destino</dt>
+                <dd class="col-sm-7 font-monospace">**** @Model.CardLastFour</dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.LoanNumber))
+            {
+                <dt class="col-sm-5">Titular del préstamo</dt>
+                <dd class="col-sm-7">@Model.LoanOwnerFullName</dd>
+                <dt class="col-sm-5">Préstamo destino</dt>
+                <dd class="col-sm-7 font-monospace">@Model.LoanNumber</dd>
+            }
+
+            <dt class="col-sm-5">Monto ingresado</dt>
+            <dd class="col-sm-7">RD$@Model.EnteredAmount.ToString("N2")</dd>
+
+            @if (Model.ShowEffectiveAmount)
+            {
+                <dt class="col-sm-5">Monto efectivo a pagar</dt>
+                <dd class="col-sm-7 fw-semibold">RD$@Model.EffectiveAmount.ToString("N2")</dd>
+            }
+        </dl>
+
+        @if (Model.ShowEffectiveAmount && Model.EffectiveAmount < Model.EnteredAmount)
+        {
+            <div class="alert alert-info">
+                El monto ingresado supera la deuda actual. Solo se debitará y aplicará el monto efectivo;
+                el excedente no se descontará.
+            </div>
+        }
+
+        <form method="post" asp-action="Confirm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Operation" />
+            <input type="hidden" asp-for="Title" />
+            <input type="hidden" asp-for="ConfirmationMessage" />
+            <input type="hidden" asp-for="SourceAccountNumber" />
+            <input type="hidden" asp-for="TargetAccountNumber" />
+            <input type="hidden" asp-for="CreditCardId" />
+            <input type="hidden" asp-for="LoanId" />
+            <input type="hidden" asp-for="EnteredAmount" />
+            <input type="hidden" asp-for="EffectiveAmount" />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
