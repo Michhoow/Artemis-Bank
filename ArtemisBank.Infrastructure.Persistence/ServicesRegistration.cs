@@ -36,6 +36,7 @@ namespace ArtemisBank.Infrastructure.Persistence
             services.AddScoped<ISavingsAccountRepository, SavingsAccountRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
+            services.AddScoped<ICommerceRepository, CommerceRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
         }
