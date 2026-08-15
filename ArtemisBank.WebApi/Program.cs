@@ -51,6 +51,7 @@ var app = builder.Build();
 
 #region Base de datos
 await app.Services.RunPersistenceMigrationsAsync(app.Configuration);
+await app.Services.RunIdentityMigrationsAsync(app.Configuration);
 #endregion
 
 #region Pipeline

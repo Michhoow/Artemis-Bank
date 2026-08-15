@@ -36,7 +36,7 @@ namespace ArtemisBank.Infrastructure.Persistence.Contexts
         #endregion
 
         #region Comercios (Monserrat)
-        // public DbSet<Commerce> Commerces => Set<Commerce>();
+        public DbSet<Commerce> Commerces => Set<Commerce>();
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
