@@ -83,5 +83,62 @@ namespace ArtemisBank.Core.Application.Common.Constants
         public const string RejectedInsufficientFunds = "Fondos insuficientes";
         public const string RejectedCancelledAccount = "Cuenta cancelada";
         public const string RejectedInvalidProduct = "Producto inválido";
+
+        // =================================================================================
+        //  Productos de credito y pagos (Manuel)
+        // =================================================================================
+
+        // ---------- Prestamos ----------
+        public const string ClientAlreadyHasActiveLoan = "Este cliente ya tiene un préstamo activo asignado.";
+        public const string InvalidLoanTerm = "El plazo seleccionado no es válido.";
+        public const string LoanAmountGreaterThanZero = "El monto a prestar debe ser mayor que cero.";
+        public const string NegativeInterestRate = "La tasa de interés anual no puede ser negativa.";
+        public const string ClientHasNoLoans = "Este cliente no tiene préstamos registrados.";
+        public const string LoanDoesNotExist = "El préstamo seleccionado no existe.";
+        public const string OnlyActiveLoanRateEditable = "Solo se puede modificar la tasa de interés de préstamos activos.";
+        public const string NoFutureInstallmentsToRecalculate = "No existen cuotas futuras pendientes para recalcular.";
+        public const string ClientNeedsPrincipalForDisbursement =
+            "El cliente no tiene una cuenta de ahorro principal activa para recibir el desembolso del préstamo.";
+        public const string CurrentHighRisk =
+            "Este cliente se considera de alto riesgo, ya que su deuda actual supera el promedio del sistema.";
+        public const string ProjectedHighRisk =
+            "Asignar este préstamo convertirá al cliente en un cliente de alto riesgo, ya que su deuda superará el umbral promedio del sistema.";
+        public const string LoanCreatedMailFailed =
+            "El préstamo fue creado correctamente, pero no fue posible enviar el correo de notificación.";
+        public const string CouldNotGenerateLoanNumber = "No fue posible generar un número de préstamo único.";
+
+        // ---------- Tarjetas de credito ----------
+        public const string CreditLimitGreaterThanZero = "El límite de crédito debe ser mayor que cero.";
+        public const string OnlyActiveClientsForCard = "Solo se puede asignar tarjetas de crédito a clientes activos.";
+        public const string ClientHasNoCards = "Este cliente no tiene tarjetas de crédito registradas.";
+        public const string CardDoesNotExist = "La tarjeta seleccionada no existe.";
+        public const string CannotModifyCancelledCard = "No se puede modificar una tarjeta cancelada.";
+        public const string NewLimitBelowDebt = "El límite de la tarjeta no puede ser inferior al monto adeudado actualmente.";
+        public const string CardHasPendingDebt = "Para cancelar esta tarjeta, el cliente debe saldar la totalidad de la deuda pendiente.";
+        public const string CardCreatedMailFailed =
+            "La tarjeta fue creada correctamente, pero no fue posible enviar el correo de notificación.";
+        public const string CardLimitUpdatedMailFailed =
+            "El límite fue actualizado correctamente, pero no fue posible enviar el correo de notificación.";
+        public const string CouldNotGenerateCardNumber = "No fue posible generar un número de tarjeta único.";
+
+        // ---------- Avance de efectivo ----------
+        public const string CardNotActive = "La tarjeta seleccionada no se encuentra activa.";
+        public const string CardExpired = "La tarjeta seleccionada se encuentra vencida.";
+        public const string AdvanceAccountNotActive = "La cuenta de ahorro seleccionada no se encuentra activa.";
+        public const string AdvanceAmountGreaterThanZero = "El monto del avance debe ser mayor que cero.";
+        public const string AdvanceExceedsAvailableCredit =
+            "El avance solicitado excede el crédito disponible de la tarjeta seleccionada.";
+
+        // ---------- Hermes Pay ----------
+        public const string PaymentExceedsAvailableCredit =
+            "El monto de la transacción excede el crédito disponible de la tarjeta.";
+        public const string InvalidCardData =
+            "Los datos de la tarjeta ingresados no corresponden a una tarjeta válida.";
+        public const string CommerceNotFound = "El comercio indicado no existe.";
+        public const string CommerceInactive = "El comercio indicado se encuentra inactivo.";
+        public const string CommerceHasNoUser = "El comercio no tiene un usuario asociado.";
+        public const string CommerceUserHasNoPrincipal =
+            "El comercio no tiene una cuenta de ahorro principal activa para recibir el pago.";
+        public const string CommerceUserWithoutCommerce = "El usuario de comercio no tiene un comercio asociado.";
     }
 }

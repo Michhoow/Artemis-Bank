@@ -57,6 +57,10 @@ namespace ArtemisBank.WebApi.Middleware
                 if (ex is AppValidationException validation)
                     problem.Extensions["errors"] = validation.Errors;
 
+                // El 409 de alto riesgo adjunta el desglose (tipo de riesgo y deudas) exigido por el funcional.
+                if (ex is HighRiskConflictException highRisk)
+                    problem.Extensions["risk"] = highRisk.Detail;
+
                 context.Response.Clear();
                 context.Response.StatusCode = status;
                 context.Response.ContentType = "application/problem+json";
@@ -71,6 +75,7 @@ namespace ArtemisBank.WebApi.Middleware
             AppValidationException => (StatusCodes.Status400BadRequest, "Errores de validación."),
             BusinessRuleException => (StatusCodes.Status400BadRequest, "Regla de negocio incumplida."),
             NotFoundException => (StatusCodes.Status404NotFound, "Recurso no encontrado."),
+            HighRiskConflictException => (StatusCodes.Status409Conflict, "Cliente de alto riesgo."),
             ConflictException => (StatusCodes.Status409Conflict, "Conflicto de estado."),
             ForbiddenException => (StatusCodes.Status403Forbidden, "Acceso denegado."),
             UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "No autenticado."),

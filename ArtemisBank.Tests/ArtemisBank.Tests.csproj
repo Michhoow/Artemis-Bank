@@ -28,5 +28,6 @@
     <ProjectReference Include="..\ArtemisBank.Core.Application\ArtemisBank.Core.Application.csproj" />
     <ProjectReference Include="..\ArtemisBank.Core.Domain\ArtemisBank.Core.Domain.csproj" />
     <ProjectReference Include="..\ArtemisBank.Infrastructure.Persistence\ArtemisBank.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\ArtemisBank.Infrastructure.Shared\ArtemisBank.Infrastructure.Shared.csproj" />
   </ItemGroup>
 </Project>

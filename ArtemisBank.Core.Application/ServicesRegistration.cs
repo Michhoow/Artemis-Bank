@@ -53,6 +53,22 @@ namespace ArtemisBank.Core.Application
             services.AddScoped<ILoanReadService, PendingLoanReadService>();
             services.AddScoped<ICreditCardReadService, PendingCreditCardReadService>();
             #endregion
+
+            #region Servicios de negocio — Manuel (productos de credito y pagos)
+            // El calculo de amortizacion es puro y sin estado: puede ser singleton.
+            services.AddSingleton<IAmortizationService, AmortizationService>();
+
+            services.AddScoped<ILoanService, LoanService>();
+            services.AddScoped<ICreditCardService, CreditCardService>();
+            services.AddScoped<IHermesPayService, HermesPayService>();
+
+            // Implementaciones REALES de los contratos de lectura. Van DESPUES de los puentes
+            // temporales de arriba: en el contenedor de .NET gana el ultimo registro, de modo que
+            // estas sustituyen a PendingLoanReadService / PendingCreditCardReadService sin tocar
+            // el codigo de Michael. (El contrato de usuarios lo sustituye la capa Identity.)
+            services.AddScoped<ILoanReadService, LoanReadService>();
+            services.AddScoped<ICreditCardReadService, CreditCardReadService>();
+            #endregion
         }
     }
 }

@@ -37,6 +37,11 @@ namespace ArtemisBank.Infrastructure.Persistence
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
             services.AddScoped<ICommerceRepository, CommerceRepository>();
+
+            // Repositorios de productos de credito y pagos (Manuel).
+            services.AddScoped<ILoanRepository, LoanRepository>();
+            services.AddScoped<ICreditCardRepository, CreditCardRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
         }

@@ -95,5 +95,85 @@ namespace ArtemisBank.Core.Application.Common.Constants
   <p>Monto pagado: <b>{Money.Format(amount)}</b><br/>
      Cuenta origen terminada en: <b>{accountLastFour}</b><br/>
      Fecha y hora: {When(moment)}</p>");
+
+        // =================================================================================
+        //  Productos de credito y pagos (Manuel)
+        // =================================================================================
+
+        // ---------- Aprobacion de prestamo ----------
+        public const string LoanApprovedSubject = "Préstamo aprobado";
+
+        public static string LoanApprovedBody(string clientName, decimal approvedCapital, int termInMonths,
+            decimal annualRate, decimal monthlyInstallment, string loanNumber) => Wrap(clientName, $@"
+  <p>Su préstamo ha sido aprobado correctamente.</p>
+  <p>Número de préstamo: <b>{loanNumber}</b><br/>
+     Monto aprobado: <b>{Money.Format(approvedCapital)}</b><br/>
+     Plazo: <b>{termInMonths} meses</b><br/>
+     Tasa de interés anual: <b>{annualRate:N2}%</b><br/>
+     Cuota mensual: <b>{Money.Format(monthlyInstallment)}</b></p>
+  <p>El monto aprobado ha sido depositado en su cuenta de ahorro principal.</p>");
+
+        // ---------- Modificacion de tasa de prestamo ----------
+        public const string LoanRateUpdatedSubject = "Actualización de tasa de interés de su préstamo";
+
+        public static string LoanRateUpdatedBody(string clientName, string loanNumber, decimal newRate,
+            decimal newMonthlyInstallment) => Wrap(clientName, $@"
+  <p>La tasa de interés de su préstamo <b>{loanNumber}</b> ha sido actualizada.</p>
+  <p>Nueva tasa de interés anual: <b>{newRate:N2}%</b><br/>
+     Nueva cuota mensual de las cuotas futuras: <b>{Money.Format(newMonthlyInstallment)}</b></p>");
+
+        // ---------- Asignacion de tarjeta ----------
+        public const string CardAssignedSubject = "Nueva tarjeta de crédito asignada";
+
+        public static string CardAssignedBody(string clientName, string cardLastFour, decimal creditLimit,
+            string expiration, DateTime assignedAt) => Wrap(clientName, $@"
+  <p>Se ha asignado una nueva tarjeta de crédito a su cuenta.</p>
+  <p>Tarjeta terminada en: <b>{cardLastFour}</b><br/>
+     Límite aprobado: <b>{Money.Format(creditLimit)}</b><br/>
+     Fecha de expiración: <b>{expiration}</b><br/>
+     Fecha de asignación: {When(assignedAt)}</p>
+  <p style=""color:#6b7280;font-size:12px"">Por seguridad, no comparta la información de su tarjeta con terceros.</p>");
+
+        // ---------- Modificacion de limite de tarjeta ----------
+        public const string CardLimitUpdatedSubject = "Modificación de límite de tarjeta";
+
+        public static string CardLimitUpdatedBody(string clientName, string cardLastFour, decimal newLimit,
+            DateTime moment) => Wrap(clientName, $@"
+  <p>El límite de su tarjeta de crédito terminada en <b>{cardLastFour}</b> ha sido actualizado.</p>
+  <p>Nuevo límite aprobado: <b>{Money.Format(newLimit)}</b><br/>
+     Fecha de modificación: {When(moment)}</p>");
+
+        // ---------- Avance de efectivo ----------
+        public static string CashAdvanceSubject(string cardLastFour) => $"Avance de efectivo desde la tarjeta {cardLastFour}";
+
+        public static string CashAdvanceBody(string clientName, decimal advanceAmount, decimal interest,
+            decimal totalCharged, string cardLastFour, string accountLastFour, DateTime moment)
+            => Wrap(clientName, $@"
+  <p>Se ha realizado un avance de efectivo desde su tarjeta terminada en <b>{cardLastFour}</b>.</p>
+  <p>Monto recibido en su cuenta terminada en <b>{accountLastFour}</b>: <b>{Money.Format(advanceAmount)}</b><br/>
+     Interés aplicado (6.25%): <b>{Money.Format(interest)}</b><br/>
+     Total cargado a la tarjeta: <b>{Money.Format(totalCharged)}</b><br/>
+     Fecha y hora: {When(moment)}</p>");
+
+        // ---------- Hermes Pay: consumo del cliente ----------
+        public static string HermesConsumptionSubject(string cardLastFour) => $"Consumo realizado con la tarjeta {cardLastFour}";
+
+        public static string HermesConsumptionBody(string clientName, decimal amount, string cardLastFour,
+            string commerceName, DateTime moment) => Wrap(clientName, $@"
+  <p>Se ha realizado un consumo con su tarjeta terminada en <b>{cardLastFour}</b>.</p>
+  <p>Comercio: <b>{commerceName}</b><br/>
+     Monto: <b>{Money.Format(amount)}</b><br/>
+     Fecha y hora: {When(moment)}</p>");
+
+        // ---------- Hermes Pay: pago recibido por el comercio ----------
+        public static string HermesPaymentReceivedSubject(string cardLastFour) => $"Pago recibido a través de tarjeta {cardLastFour}";
+
+        public static string HermesPaymentReceivedBody(string commerceName, decimal amount, string cardLastFour,
+            DateTime moment) => Wrap(commerceName, $@"
+  <p>Ha recibido un nuevo pago mediante Hermes Pay.</p>
+  <p>Tarjeta terminada en: <b>{cardLastFour}</b><br/>
+     Monto recibido: <b>{Money.Format(amount)}</b><br/>
+     Fecha y hora: {When(moment)}</p>
+  <p style=""color:#6b7280;font-size:12px"">Este mensaje sirve como constancia del pago recibido.</p>");
     }
 }

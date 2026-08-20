@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArtemisBank.Infrastructure.Persistence.Repositories
 {
-    /// <summary>Repositorio generico sobre el DbContext. Requerimiento tecnico del proyecto.</summary>
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected readonly ArtemisDbContext Context;

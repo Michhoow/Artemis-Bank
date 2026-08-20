@@ -18,12 +18,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtemisBank.WebApi", "Artem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtemisBank.Tests", "ArtemisBank.Tests\ArtemisBank.Tests.csproj", "{B759D21A-B3D0-4ECD-8BB2-5BFE7F2B8764}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtemisBank.AzureFunctions", "ArtemisBank.AzureFunctions\ArtemisBank.AzureFunctions.csproj", "{BB58DE69-B81C-411E-8434-7D8D24C02D96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB58DE69-B81C-411E-8434-7D8D24C02D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB58DE69-B81C-411E-8434-7D8D24C02D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB58DE69-B81C-411E-8434-7D8D24C02D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB58DE69-B81C-411E-8434-7D8D24C02D96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7FE5A1AE-BD21-434C-8F14-D37130CF5F46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7FE5A1AE-BD21-434C-8F14-D37130CF5F46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FE5A1AE-BD21-434C-8F14-D37130CF5F46}.Release|Any CPU.ActiveCfg = Release|Any CPU

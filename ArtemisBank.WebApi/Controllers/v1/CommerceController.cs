@@ -39,7 +39,7 @@ namespace ArtemisBank.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            var commerces = await _commerceRepository.GetAllAsync();
+            var commerces = await _commerceRepository.GetAllListAsync();
             return Ok(commerces);
         }
 

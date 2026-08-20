@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "UseInMemoryDatabase": "false"
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=MACULAMEDRANO10;Database=ArtemisBankDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}

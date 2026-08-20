@@ -29,10 +29,10 @@ namespace ArtemisBank.Infrastructure.Persistence.Contexts
         #endregion
 
         #region Productos de credito y pagos (Manuel)
-        // public DbSet<Loan> Loans => Set<Loan>();
-        // public DbSet<Installment> Installments => Set<Installment>();
-        // public DbSet<CreditCard> CreditCards => Set<CreditCard>();
-        // public DbSet<Consumption> Consumptions => Set<Consumption>();
+        public DbSet<Loan> Loans => Set<Loan>();
+        public DbSet<Installment> Installments => Set<Installment>();
+        public DbSet<CreditCard> CreditCards => Set<CreditCard>();
+        public DbSet<Consumption> Consumptions => Set<Consumption>();
         #endregion
 
         #region Comercios (Monserrat)

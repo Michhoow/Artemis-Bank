@@ -118,7 +118,7 @@ namespace ArtemisBank.Infrastructure.Identity.Services
             if (commerce is not null)
             {
                 commerce.IsActive = true;
-                await _commerceRepository.UpdateAsync(commerce, commerce.Id);
+                await _commerceRepository.UpdateAsync(commerce.Id, commerce);
             }
 
             _logger.LogInformation("API Confirm: cuenta activada para userId '{UserId}'.", userId);

@@ -3,10 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace ArtemisBank.Core.Application.Behaviors
 {
-    /// <summary>
-    /// Traza de auditoria de cada Command/Query: nombre, duracion y resultado.
-    /// Nunca se serializa el request completo para no filtrar datos sensibles a los logs.
-    /// </summary>
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : notnull
     {
