@@ -38,3 +38,95 @@ Proyecto final de Programación 3.
 ---
 
 ## Arquitectura
+
+
+**Stack:** .NET 9, ASP.NET Core MVC y Web API, Entity Framework Core (Code First), ASP.NET Identity, JWT, MediatR, FluentValidation, AutoMapper, Serilog, Swagger, xUnit.
+
+---
+
+## Requisitos
+
+- SDK de .NET 9
+- SQL Server LocalDB o una instancia de SQL Server
+
+---
+
+## Cómo ejecutar
+
+```bash
+dotnet restore
+dotnet build
+```
+
+Aplicar las migraciones de ambos contextos:
+
+```bash
+dotnet ef database update -c ArtemisDbContext \
+  -p ArtemisBank.Infrastructure.Persistence -s ArtemisBank.WebApp
+
+dotnet ef database update -c IdentityContext \
+  -p ArtemisBank.Infrastructure.Identity -s ArtemisBank.WebApp
+```
+
+Si `dotnet ef` no está disponible:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+Ejecutar cada aplicación en su propia terminal:
+
+```bash
+dotnet run --project ArtemisBank.WebApp
+dotnet run --project ArtemisBank.WebApi
+```
+
+| Aplicación | Dirección |
+|---|---|
+| Aplicación web | https://localhost:7101 |
+| Web API (Swagger) | https://localhost:7201/swagger |
+
+Los roles y usuarios de prueba se crean automáticamente al iniciar la aplicación web.
+
+---
+
+## Usuarios de prueba
+
+El nombre de usuario es el correo electrónico completo.
+
+| Rol | Usuario | Contraseña | Acceso |
+|---|---|---|---|
+| Administrador | `admin@artemisbank.do` | `Admin@12345!` | Web y API |
+| Cajero | `cajero@artemisbank.do` | `Cajero@12345!` | Web |
+| Cliente | `cliente@artemisbank.do` | `Cliente@12345!` | Web |
+| Comercio | `comercio@artemisbank.do` | `Comercio@12345!` | Solo API |
+
+El rol Comercio no inicia sesión en la aplicación web. Según el documento funcional, ese rol es exclusivo de la Web API y del procesador Hermes Pay.
+
+### Autenticación en la Web API
+
+1. Ejecutar `POST /api/v1/Account/login` con las credenciales.
+2. Copiar el valor del campo `token` de la respuesta.
+3. Pulsar **Authorize** en Swagger e ingresar `Bearer {token}`.
+
+El token incluye identificador de usuario, nombre de usuario, rol y expiración a las dos horas.
+
+---
+
+## Pruebas
+
+```bash
+dotnet test
+```
+
+454 pruebas unitarias y de integración que cubren los 30 handlers CQRS de los siete módulos, los servicios de negocio, los validadores y los repositorios de persistencia e Identity.
+
+---
+
+## Configuración
+
+La cadena de conexión y el resto de parámetros se definen en `appsettings.json` y `appsettings.Development.json` de cada aplicación.
+
+El envío de correos requiere configurar la sección `MailSettings`. Por seguridad, el repositorio no incluye credenciales reales. Con `MailSettings` sin configurar, la aplicación funciona con normalidad y los envíos quedan registrados en el log.
+
+Los usuarios creados desde la aplicación nacen inactivos y requieren activación por correo. Un administrador también puede activarlos manualmente desde Gestión de usuarios.
