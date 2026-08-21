@@ -1,0 +1,6 @@
+C:\Users\micha\OneDrive\Escritorio\proyecto final\clean proyecto 2\Artemis-Bank\ArtemisBank.WebApp\wwwroot\js\cedula.js
+C:\Users\micha\OneDrive\Escritorio\proyecto final\clean proyecto 2\Artemis-Bank\ArtemisBank.WebApp\wwwroot\css\site.css
+C:\Users\micha\OneDrive\Escritorio\proyecto final\clean proyecto 2\Artemis-Bank\ArtemisBank.WebApp\wwwroot\js\tope-pago.js
+wwwroot\css\site.css
+wwwroot\js\cedula.js
+wwwroot\js\tope-pago.js

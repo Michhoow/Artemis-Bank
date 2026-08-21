@@ -1,0 +1,35 @@
+@model CashierHomeViewModel
+@{ ViewData["Title"] = "Home del cajero"; }
+
+<h1 class="h4 mb-4">Mis operaciones de hoy</h1>
+
+<div class="row g-3">
+    @{
+        var indicators = new (string Label, int Value)[]
+        {
+            ("Transacciones realizadas hoy", Model.TodayTransactions),
+            ("Pagos realizados hoy", Model.TodayPayments),
+            ("Depósitos realizados hoy", Model.TodayDeposits),
+            ("Retiros realizados hoy", Model.TodayWithdrawals)
+        };
+    }
+    @foreach (var indicator in indicators)
+    {
+        <div class="col-6 col-lg-3">
+            <div class="card card-indicator shadow-sm h-100">
+                <div class="card-body">
+                    <div class="label">@indicator.Label</div>
+                    <div class="value">@indicator.Value.ToString("N0")</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4 d-flex flex-wrap gap-2">
+    <a class="btn btn-primary" asp-action="Deposit">Depósito</a>
+    <a class="btn btn-primary" asp-action="Withdrawal">Retiro</a>
+    <a class="btn btn-outline-primary" asp-action="CardPayment">Pago a tarjeta de crédito</a>
+    <a class="btn btn-outline-primary" asp-action="LoanPayment">Pago a préstamo</a>
+    <a class="btn btn-outline-primary" asp-action="ThirdParty">Transacciones a cuentas de terceros</a>
+</div>

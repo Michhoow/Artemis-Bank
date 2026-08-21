@@ -1,0 +1,43 @@
+@model ExpressTransactionViewModel
+@{ ViewData["Title"] = "Transacción Express"; }
+
+<h1 class="h4 mb-3">Transacción Express</h1>
+
+<form method="post" asp-action="Express" class="card card-body shadow-sm" style="max-width:640px">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="TargetAccountNumber"></label>
+        <input class="form-control" asp-for="TargetAccountNumber" maxlength="9" placeholder="123456789" />
+        <span asp-validation-for="TargetAccountNumber" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Amount"></label>
+        <div class="input-group">
+            <span class="input-group-text">RD$</span>
+            <input class="form-control" asp-for="Amount" type="number" step="0.01" min="0.01" />
+        </div>
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="SourceAccountNumber"></label>
+        <select class="form-select" asp-for="SourceAccountNumber">
+            <option value="">Seleccione una cuenta</option>
+            @foreach (var account in Model.SourceAccounts)
+            {
+                <option value="@account.AccountNumber">@account.Display</option>
+            }
+        </select>
+        <span asp-validation-for="SourceAccountNumber" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Continuar</button>
+        <a class="btn btn-outline-secondary" asp-controller="ClientHome" asp-action="Index">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

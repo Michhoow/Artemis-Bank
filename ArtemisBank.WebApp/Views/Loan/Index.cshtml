@@ -1,0 +1,106 @@
+@model LoanIndexViewModel
+@{ ViewData["Title"] = "Gestión de préstamos"; }
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Gestión de préstamos</h1>
+    <a class="btn btn-primary" asp-action="SelectClient">
+        <i class="bi bi-plus-lg me-1"></i> Asignar préstamo
+    </a>
+</div>
+
+<form method="get" class="card card-body shadow-sm mb-3">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+            <label class="form-label" for="identification">Cédula del cliente</label>
+            <input id="identification" name="identification" class="form-control" data-cedula
+                   value="@Model.Identification" placeholder="000-0000000-0" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="status">Estado</label>
+            <select id="status" name="status" class="form-select">
+                <option value="activo" selected="@(Model.Status == "activo")">Activos</option>
+                <option value="completado" selected="@(Model.Status == "completado")">Completados</option>
+                <option value="todos" selected="@(Model.Status == "todos")">Todos</option>
+            </select>
+        </div>
+        <div class="col-md-3 d-grid">
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.InfoMessage))
+{
+    <div class="alert alert-info">@Model.InfoMessage</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>Número de préstamo</th>
+                <th>Cliente</th>
+                <th class="text-end">Capital aprobado</th>
+                <th class="text-end">Monto pendiente</th>
+                <th class="text-center">Cuotas</th>
+                <th class="text-end">Tasa anual</th>
+                <th>Estado</th>
+                <th>Situación</th>
+                <th class="text-end">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Loans.Data.Any())
+        {
+            <tr><td colspan="9" class="text-center text-secondary py-4">No hay préstamos para mostrar.</td></tr>
+        }
+        else
+        {
+            @foreach (var loan in Model.Loans.Data)
+            {
+                <tr>
+                    <td class="font-monospace">@loan.LoanNumber</td>
+                    <td>
+                        @loan.ClientFullName<br />
+                        <span class="text-secondary small">@Cedula.Format(loan.ClientIdentification)</span>
+                    </td>
+                    <td class="text-end">@loan.CapitalAmountDisplay</td>
+                    <td class="text-end fw-semibold">@loan.PendingAmountDisplay</td>
+                    <td class="text-center">@loan.PaidInstallments / @loan.TotalInstallments</td>
+                    <td class="text-end">@loan.RateDisplay</td>
+                    <td>
+                        <span class="badge @(loan.Status == "Activo" ? "bg-success" : "bg-secondary")">
+                            @loan.Status
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge @(loan.ClientPaymentStatus == DisplayText.LoanOverdue ? "bg-danger" : "bg-info text-dark")">
+                            @loan.ClientPaymentStatus
+                        </span>
+                    </td>
+                    <td class="text-end text-nowrap">
+                        <a class="btn btn-sm btn-outline-secondary"
+                           asp-action="Details" asp-route-id="@loan.Id">Ver detalles</a>
+                        @if (loan.Status == "Activo")
+                        {
+                            <a class="btn btn-sm btn-outline-primary"
+                               asp-action="Edit" asp-route-id="@loan.Id">Editar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var pager = ArtemisBank.Core.Application.ViewModels.PagerViewModel.For(
+        Model.Loans.Page, Model.Loans.TotalPages, "Index", "Loan",
+        new Dictionary<string, string>
+        {
+            ["identification"] = Model.Identification ?? string.Empty,
+            ["status"] = Model.Status
+        });
+}
+<partial name="_Pager" model="pager" />

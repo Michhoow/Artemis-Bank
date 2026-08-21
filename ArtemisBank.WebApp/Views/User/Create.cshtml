@@ -1,0 +1,98 @@
+@model CreateUserViewModel
+@{ ViewData["Title"] = "Crear usuario"; }
+
+<h1 class="h4 mb-3">Crear usuario</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Create">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="FirstName"></label>
+                    <input class="form-control" asp-for="FirstName" />
+                    <span class="text-danger small" asp-validation-for="FirstName"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="LastName"></label>
+                    <input class="form-control" asp-for="LastName" />
+                    <span class="text-danger small" asp-validation-for="LastName"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Identification"></label>
+                    <input class="form-control" asp-for="Identification" data-cedula />
+                    <span class="text-danger small" asp-validation-for="Identification"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Email"></label>
+                    <input class="form-control" asp-for="Email" type="email" />
+                    <span class="text-danger small" asp-validation-for="Email"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="UserName"></label>
+                    <input class="form-control" asp-for="UserName" />
+                    <span class="text-danger small" asp-validation-for="UserName"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Role"></label>
+                    <select class="form-select" asp-for="Role" id="roleSelect">
+                        @foreach (var role in CreateUserViewModel.AssignableRoles)
+                        {
+                            <option value="@role" selected="@(Model.Role == role)">@role</option>
+                        }
+                    </select>
+                    <span class="text-danger small" asp-validation-for="Role"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Password"></label>
+                    <input class="form-control" asp-for="Password" type="password" />
+                    <span class="text-danger small" asp-validation-for="Password"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="ConfirmPassword"></label>
+                    <input class="form-control" asp-for="ConfirmPassword" type="password" />
+                    <span class="text-danger small" asp-validation-for="ConfirmPassword"></span>
+                </div>
+
+                <div class="col-md-6" id="initialAmountGroup">
+                    <label class="form-label" asp-for="InitialAmount"></label>
+                    <input class="form-control" asp-for="InitialAmount" type="number" step="0.01" min="0" />
+                    <span class="text-danger small" asp-validation-for="InitialAmount"></span>
+                    <div class="form-text">
+                        Solo aplica a clientes. Si es mayor que RD$0.00 se registra como una
+                        transacción de tipo crédito en su cuenta principal.
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info small mt-3">
+                El usuario se creará <strong>inactivo</strong> y recibirá un correo con el enlace de
+                activación. No podrá iniciar sesión hasta activarlo.
+            </div>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
+                <button type="submit" class="btn btn-primary">Crear usuario</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var role = document.getElementById('roleSelect');
+            var group = document.getElementById('initialAmountGroup');
+            function toggle() { group.style.display = role.value === 'Cliente' ? '' : 'none'; }
+            role.addEventListener('change', toggle);
+            toggle();
+        })();
+    </script>
+}

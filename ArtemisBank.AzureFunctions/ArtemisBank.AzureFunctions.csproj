@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ArtemisBank.AzureFunctions</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    Worker aislado v4 sobre .NET 9.
+
+    Las versiones estan FIJADAS a proposito, no flotantes:
+
+      - La familia 1.x del SDK (1.17.x) no reconoce net9.0 y falla con
+        "Invalid combination of TargetFramework and AzureFunctionsVersion".
+
+      - Las 2.x recientes (por ejemplo Worker 2.52.0) ya exigen
+        Microsoft.Extensions.Hosting 10.0.0, es decir, la linea de .NET 10.
+        Un rango flotante "2.*" salta a esas y arrastra dependencias de .NET 10
+        a un proyecto que debe ser .NET 9.
+
+      - Worker/Sdk 2.0.0 es la combinacion que soporta net9.0 y se mantiene
+        sobre la linea 9.x de Microsoft.Extensions. Es la que se usa aqui.
+
+    Al actualizar estos paquetes, comprobar que ninguna dependencia de
+    Microsoft.Extensions salte a la linea 10.x, listando los paquetes transitivos
+    con el comando "dotnet list package" y su opcion include-transitive.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArtemisBank.Core.Application\ArtemisBank.Core.Application.csproj" />
+    <ProjectReference Include="..\ArtemisBank.Core.Domain\ArtemisBank.Core.Domain.csproj" />
+    <ProjectReference Include="..\ArtemisBank.Infrastructure.Persistence\ArtemisBank.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\ArtemisBank.Infrastructure.Shared\ArtemisBank.Infrastructure.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

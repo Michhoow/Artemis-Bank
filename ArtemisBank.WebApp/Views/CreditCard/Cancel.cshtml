@@ -1,0 +1,39 @@
+@model CancelCardViewModel
+@{ ViewData["Title"] = "Cancelar tarjeta"; }
+
+<h1 class="h4 mb-3">Cancelar tarjeta de crédito</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Tarjeta</dt>
+            <dd class="col-sm-9 font-monospace">@Model.MaskedNumber</dd>
+
+            <dt class="col-sm-3">Cliente</dt>
+            <dd class="col-sm-9">@Model.ClientFullName</dd>
+
+            <dt class="col-sm-3">Deuda pendiente</dt>
+            <dd class="col-sm-9 fw-semibold">@Model.DebtDisplay</dd>
+        </dl>
+
+        @if (!Model.CanCancel)
+        {
+            <div class="alert alert-danger">@AppMessages.CardCannotCancelWithDebt</div>
+            <a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
+        }
+        else
+        {
+            <div class="alert alert-warning">@AppMessages.CardConfirmCancel</div>
+
+            <form method="post" asp-action="Cancel">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="creditCardId" value="@Model.CreditCardId" />
+
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Confirmar cancelación</button>
+                </div>
+            </form>
+        }
+    </div>
+</div>

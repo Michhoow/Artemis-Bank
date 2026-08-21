@@ -1,0 +1,46 @@
+@model EditCardLimitViewModel
+@{ ViewData["Title"] = "Editar límite de crédito"; }
+
+<h1 class="h4 mb-3">Editar límite de crédito</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="CreditCardId" />
+            <input type="hidden" asp-for="MaskedNumber" />
+            <input type="hidden" asp-for="ClientFullName" />
+            <input type="hidden" asp-for="CurrentDebt" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+            <dl class="row">
+                <dt class="col-sm-3">Tarjeta</dt>
+                <dd class="col-sm-9 font-monospace">@Model.MaskedNumber</dd>
+
+                <dt class="col-sm-3">Cliente</dt>
+                <dd class="col-sm-9">@Model.ClientFullName</dd>
+
+                <dt class="col-sm-3">Deuda actual</dt>
+                <dd class="col-sm-9 fw-semibold">@Model.CurrentDebtDisplay</dd>
+            </dl>
+
+            <div class="mb-3 col-md-5">
+                <label class="form-label" asp-for="CreditLimit"></label>
+                <input class="form-control" asp-for="CreditLimit" type="number" step="0.01" min="0.01" />
+                <span class="text-danger small" asp-validation-for="CreditLimit"></span>
+            </div>
+
+            <div class="alert alert-info small">
+                El nuevo límite no puede ser menor que la deuda actual de la tarjeta.
+            </div>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
+                <button type="submit" class="btn btn-primary">Modificar límite</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

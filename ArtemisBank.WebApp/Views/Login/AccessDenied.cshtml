@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Acceso denegado";
+    Layout = "_AuthLayout";
+}
+
+<div class="text-center">
+    <i class="bi bi-shield-lock display-5 text-secondary"></i>
+
+    <h2 class="mt-3">Acceso denegado</h2>
+
+    <p class="lead-sub">@AppMessages.AccessDenied</p>
+
+    <a class="btn btn-primary w-100 auth-submit" asp-controller="Home" asp-action="Index">
+        Volver a mi inicio
+    </a>
+</div>

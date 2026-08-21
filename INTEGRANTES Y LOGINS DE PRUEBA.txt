@@ -1,0 +1,61 @@
+ARTEMIS BANKING PRO (ABP)
+=========================
+
+
+INTEGRANTES
+-----------
+
+Nombre: J. Michael Martinez Almonte
+Matricula: 2024-2440
+
+Nombre: Montserrat Margarita Nunez De Leon
+Matricula: 2025-1379
+
+Nombre: Manuel Antonio Medrano Ortiz
+Matricula: 2024-2398
+
+
+LOGINS DE PRUEBA
+----------------
+
+
+  Administrador
+    Usuario:     admin@artemisbank.do
+    Contrasena:  Admin@12345!
+
+  Cajero
+    Usuario:     cajero@artemisbank.do
+    Contrasena:  Cajero@12345!
+
+  Cliente
+    Usuario:     cliente@artemisbank.do
+    Contrasena:  Cliente@12345!
+
+
+WEB API                 https://localhost:7201/swagger
+
+  Administrador
+    Usuario:     admin@artemisbank.do
+    Contrasena:  Admin@12345!
+
+  Comercio
+    Usuario:     comercio@artemisbank.do
+    Contrasena:  Comercio@12345!
+
+  El rol Comercio no inicia sesion en la aplicacion web. Segun el documento
+  funcional, ese rol es exclusivo de la Web API y del procesador Hermes Pay.
+
+
+
+
+
+-----
+
+El envio de correos requiere configurar la seccion MailSettings en los
+archivos appsettings. Por seguridad, la entrega no incluye credenciales
+de correo reales. Con MailSettings sin configurar, la aplicacion funciona
+con normalidad y los envios quedan registrados en el log.
+
+Los usuarios creados desde la aplicacion nacen inactivos y requieren
+activacion por correo. Un administrador tambien puede activarlos
+manualmente desde Gestion de usuarios.

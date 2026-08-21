@@ -1,0 +1,41 @@
+@model ChangeUserStatusViewModel
+@{ ViewData["Title"] = Model.ActionText + " usuario"; }
+
+<h1 class="h4 mb-3">@Model.ActionText usuario</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nombre</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">Usuario</dt>
+            <dd class="col-sm-9">@Model.UserName</dd>
+
+            <dt class="col-sm-3">Rol</dt>
+            <dd class="col-sm-9">@Model.Role</dd>
+
+            <dt class="col-sm-3">Estado actual</dt>
+            <dd class="col-sm-9">
+                <span class="badge @(Model.IsActive ? "bg-success" : "bg-secondary")">
+                    @(Model.IsActive ? "Activo" : "Inactivo")
+                </span>
+            </dd>
+        </dl>
+
+        <div class="alert alert-warning">@Model.ConfirmationMessage</div>
+
+        <form method="post" asp-action="ChangeStatus">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="targetStatus" value="@Model.TargetStatus.ToString().ToLowerInvariant()" />
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+                <button type="submit" class="btn @(Model.IsActive ? "btn-danger" : "btn-success")">
+                    Confirmar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

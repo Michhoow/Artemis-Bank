@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ArtemisBank.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.AccountController">
+            <summary>
+            Endpoints públicos de autenticación e identidad de la API.
+            Propiedad: Monserrat (DoD MON-03).
+            </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.AccountController.Login(ArtemisBank.WebApi.Controllers.v1.LoginRequestDto)">
+            <summary>Autenticación con usuario/email y clave. Retorna el JWT si la cuenta está activa.</summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.AccountController.Confirm(ArtemisBank.WebApi.Controllers.v1.ConfirmAccountRequestDto)">
+            <summary>Confirma la cuenta con el token de activación enviada por correo (un solo uso).</summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.AccountController.GetResetToken(ArtemisBank.WebApi.Controllers.v1.GetResetTokenRequestDto)">
+            <summary>Solicita token de restablecimiento de contraseña. El token se envía por correo en el cuerpo.</summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.AccountController.ResetPassword(ArtemisBank.WebApi.Controllers.v1.ResetPasswordRequestDto)">
+            <summary>Aplica la nueva contraseña usando el token de un solo uso (30 min).</summary>
+        </member>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.CommerceController">
+            <summary>
+            Gestion de comercios desde la Web API.
+            Todos los endpoints requieren JWT y rol Administrador.
+            La orquestacion se hace por CQRS: el controlador solo envia Commands y Queries por Mediator
+            y nunca toca repositorios ni el DbContext.
+            </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CommerceController.Get(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>Obtiene el listado paginado de comercios registrados.</summary>
+            <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+            <param name="pageSize">Registros por pagina. Maximo 20.</param>
+            <param name="status">activo | inactivo | todos. Por defecto solo activos.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CommerceController.GetById(System.Int32,System.Threading.CancellationToken)">
+            <summary>Obtiene el detalle de un comercio.</summary>
+            <param name="id">Identificador del comercio.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CommerceController.Post(ArtemisBank.Core.Application.Dtos.Commerces.SaveCommerceDto,System.Threading.CancellationToken)">
+            <summary>Registra un nuevo comercio.</summary>
+            <remarks>
+            El RNC y el correo deben ser unicos entre comercios; si ya existen la respuesta es
+            409 Conflict. El comercio se crea activo pero sin usuario asociado: hasta que se le
+            cree uno mediante <c>POST /api/users/commerce/{commerceId}</c> no puede operar.
+            </remarks>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CommerceController.Put(System.Int32,ArtemisBank.Core.Application.Dtos.Commerces.SaveCommerceDto,System.Threading.CancellationToken)">
+            <summary>Actualiza los datos de un comercio.</summary>
+            <remarks>
+            Este endpoint NUNCA modifica el estado del comercio. Para activarlo o desactivarlo
+            use <c>PATCH /api/commerce/{id}/status</c>.
+            </remarks>
+            <param name="id">Identificador del comercio.</param>
+            <param name="request">Datos actualizados del comercio.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CommerceController.SetStatus(System.Int32,ArtemisBank.Core.Application.Dtos.Commerces.CommerceStatusDto,System.Threading.CancellationToken)">
+             <summary>Activa o desactiva un comercio.</summary>
+             <remarks>
+             Al DESACTIVAR el comercio se inactivan tambien sus usuarios asociados, para que no
+             puedan seguir emitiendo cobros con un token ya emitido.
+            
+             Al REACTIVAR el comercio sus usuarios NO se reactivan automaticamente: el administrador
+             decide caso por caso quien recupera el acceso.
+             </remarks>
+             <param name="id">Identificador del comercio.</param>
+             <param name="request">Nuevo estado del comercio.</param>
+             <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.CreditCardController">
+             <summary>
+             Gestion de tarjetas de credito desde la Web API.
+             Todos los endpoints requieren JWT y rol Administrador.
+            
+             Ninguna respuesta de este controlador contiene el numero completo de la tarjeta,
+             el CVC ni su hash. La unica excepcion controlada es el CVC devuelto por POST,
+             que se entrega una sola vez al crear la tarjeta y no queda almacenado en claro.
+             </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CreditCardController.Get(System.Int32,System.Int32,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>Obtiene un listado paginado de tarjetas de credito.</summary>
+            <remarks>
+            Por defecto muestra las tarjetas activas, de la mas reciente a la mas antigua.
+            El numero de tarjeta se devuelve siempre enmascarado.
+            </remarks>
+            <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+            <param name="pageSize">Registros por pagina. Maximo 20.</param>
+            <param name="identification">Cedula del cliente.</param>
+            <param name="status">activa | cancelada | todas.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CreditCardController.Post(ArtemisBank.Core.Application.Dtos.CreditCards.CreateCreditCardDto,System.Threading.CancellationToken)">
+             <summary>Asigna una nueva tarjeta de credito a un cliente activo.</summary>
+             <remarks>
+             El sistema genera un numero unico de 16 digitos, una fecha de expiracion a tres anios
+             y un CVC de 3 digitos.
+            
+             El CVC se almacena UNICAMENTE como hash SHA-256 con sal por tarjeta. El valor en claro
+             se devuelve una sola vez en esta respuesta y no puede recuperarse despues por ningun medio.
+             </remarks>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CreditCardController.GetById(System.Int32,System.Threading.CancellationToken)">
+            <summary>Obtiene el detalle de una tarjeta con sus consumos.</summary>
+            <remarks>
+            Se incluyen tanto los consumos aprobados como los rechazados, del mas reciente al
+            mas antiguo. Los rechazados quedan en el historial pero nunca afectaron la deuda.
+            </remarks>
+            <param name="id">Identificador de la tarjeta.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CreditCardController.UpdateLimit(System.Int32,ArtemisBank.Core.Application.Dtos.CreditCards.UpdateCardLimitDto,System.Threading.CancellationToken)">
+            <summary>Modifica el limite de credito aprobado.</summary>
+            <remarks>
+            El nuevo limite no puede ser menor que la deuda actual de la tarjeta: dejarlo por
+            debajo dejaria la tarjeta sobregirada.
+            </remarks>
+            <param name="id">Identificador de la tarjeta.</param>
+            <param name="request">Nuevo limite de credito.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.CreditCardController.Cancel(System.Int32,System.Threading.CancellationToken)">
+            <summary>Cancela una tarjeta de credito.</summary>
+            <remarks>
+            Solo procede si la deuda es exactamente RD$0.00: cancelar una tarjeta con deuda
+            pendiente borraria un pasivo del cliente. La tarjeta nunca se elimina fisicamente
+            ni pierde su historial de consumos.
+            </remarks>
+            <param name="id">Identificador de la tarjeta.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.LoanController">
+            <summary>
+            Gestion de prestamos desde la Web API.
+            Todos los endpoints requieren JWT y rol Administrador.
+            La orquestacion se hace por CQRS: el controlador solo envia Commands y Queries por Mediator.
+            </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.LoanController.Get(System.Int32,System.Int32,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>Obtiene un listado paginado de prestamos.</summary>
+            <remarks>
+            Por defecto muestra los prestamos activos, del mas reciente al mas antiguo.
+            Al buscar por cedula sin especificar estado se listan primero los activos y luego
+            los completados.
+            </remarks>
+            <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+            <param name="pageSize">Registros por pagina. Maximo 20.</param>
+            <param name="identification">Cedula del cliente.</param>
+            <param name="status">activo | completado | todos.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.LoanController.Post(ArtemisBank.Core.Application.Dtos.Loans.CreateLoanDto,System.Threading.CancellationToken)">
+             <summary>Asigna un prestamo a un cliente activo y genera su tabla de amortizacion.</summary>
+             <remarks>
+             El cliente debe estar activo, no tener otro prestamo activo y contar con una cuenta de
+             ahorro principal activa que reciba el desembolso.
+            
+             Antes de crear nada se evalua el riesgo crediticio. Si el cliente es o se convierte en
+             cliente de alto riesgo y <c>confirmHighRisk</c> no viene en <c>true</c>, la respuesta es
+             <b>409 Conflict</b> con el detalle del riesgo; reenvie la misma solicitud con
+             <c>confirmHighRisk: true</c> para continuar.
+            
+             El capital aprobado se acredita a la cuenta principal como transaccion de tipo CREDITO.
+             </remarks>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.LoanController.GetById(System.Int32,System.Threading.CancellationToken)">
+            <summary>Obtiene el detalle de un prestamo con su tabla de amortizacion.</summary>
+            <remarks>
+            Cada cuota incluye su estado de pago (pendiente, parcialmente pagada o pagada) y su
+            indicador de atraso, que son dos datos independientes.
+            </remarks>
+            <param name="id">Identificador del prestamo.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.LoanController.UpdateRate(System.Int32,ArtemisBank.Core.Application.Dtos.Loans.UpdateLoanRateDto,System.Threading.CancellationToken)">
+            <summary>Modifica la tasa de interes anual del prestamo.</summary>
+            <remarks>
+            Solo se recalculan las cuotas FUTURAS que esten completamente pendientes.
+            Las cuotas pagadas, parcialmente pagadas y atrasadas no se modifican, y las fechas
+            de vencimiento pactadas se conservan.
+            </remarks>
+            <param name="id">Identificador del prestamo.</param>
+            <param name="request">Nueva tasa de interes anual.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.PayController">
+             <summary>
+             Hermes Pay — procesador de pagos con tarjeta de credito para comercios.
+            
+             Accesible por los roles Administrador y Comercio. La resolucion del comercio depende
+             del rol autenticado y es el punto de seguridad central de este modulo:
+            
+              - Rol <b>Comercio</b>: el comercio se toma SIEMPRE del usuario del token. El
+                <c>commerceId</c> de la URL se IGNORA, para que un comercio no pueda operar sobre
+                otro simplemente cambiando un numero en la ruta.
+              - Rol <b>Administrador</b>: el comercio se toma de la URL, porque opera en nombre
+                de cualquiera.
+             </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.PayController.GetTransactions(System.Int32,System.Int32,System.Int32,System.Threading.CancellationToken)">
+             <summary>Obtiene las transacciones registradas para un comercio.</summary>
+             <remarks>
+             Devuelve un listado paginado, de la transaccion mas reciente a la mas antigua,
+             junto al identificador y el nombre del comercio.
+            
+             Para el rol Comercio, el <c>commerceId</c> de la URL se ignora y se usa el comercio
+             asociado al token. Un comercio inactivo no puede consultar transacciones.
+            
+             De la tarjeta utilizada solo se devuelven los ultimos cuatro digitos.
+             </remarks>
+             <param name="commerceId">Identificador del comercio.</param>
+             <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+             <param name="pageSize">Registros por pagina. Maximo 20.</param>
+             <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.PayController.ProcessPayment(System.Int32,ArtemisBank.Core.Application.Dtos.HermesPay.HermesPayRequestDto,System.Threading.CancellationToken)">
+             <summary>Procesa un pago con tarjeta de credito a favor de un comercio.</summary>
+             <remarks>
+             Validaciones aplicadas antes de mover dinero: el numero de tarjeta debe tener
+             16 digitos; el mes de expiracion debe estar entre 01 y 12 y coincidir con la tarjeta;
+             el CVC se valida comparando su hash contra el almacenado; la tarjeta debe estar activa
+             y no vencida; el monto debe ser mayor que cero; y la deuda mas el nuevo consumo no
+             puede superar el limite aprobado.
+            
+             Un cobro aprobado aumenta la deuda de la tarjeta, registra un consumo APROBADO,
+             acredita el monto en la cuenta principal del comercio como CREDITO y responde
+             <b>204 No Content</b>. Todo ocurre dentro de una unica transaccion de base de datos.
+            
+             Un cobro rechazado por falta de credito queda registrado como consumo RECHAZADO,
+             no modifica balances ni deudas, y responde <b>400 Bad Request</b>.
+            
+             El CVC nunca se almacena, ni se registra en log, ni se devuelve.
+             </remarks>
+             <param name="commerceId">
+             Comercio beneficiario. Se ignora cuando el rol autenticado es Comercio.
+             </param>
+             <param name="request">Datos de la tarjeta y el monto a cobrar.</param>
+             <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.PayController.ResolveCommerceIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>Determina el comercio segun el rol del token.</summary>
+        </member>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.SavingsAccountController">
+            <summary>
+            Administracion de cuentas de ahorro desde la Web API.
+            Todos los endpoints requieren JWT y rol Administrador.
+            La orquestacion se hace por CQRS: el controlador solo envia Commands y Queries por Mediator.
+            </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.SavingsAccountController.Get(System.Int32,System.Int32,System.String,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>Obtiene un listado paginado de cuentas de ahorro.</summary>
+            <remarks>
+            Por defecto muestra las cuentas activas, principales y secundarias, de la mas reciente
+            a la mas antigua. Permite filtrar por cedula del cliente, estado y tipo de cuenta.
+            </remarks>
+            <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+            <param name="pageSize">Registros por pagina. Maximo 20.</param>
+            <param name="identification">Cedula del cliente.</param>
+            <param name="status">activa | cancelada | todas.</param>
+            <param name="type">principal | secundaria | todas.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.SavingsAccountController.Post(ArtemisBank.Core.Application.Dtos.SavingsAccounts.CreateSavingsAccountDto,System.Threading.CancellationToken)">
+            <summary>Asigna una nueva cuenta de ahorro secundaria a un cliente activo.</summary>
+            <remarks>
+            Este endpoint nunca crea cuentas principales: esas se generan automaticamente al crear
+            el usuario de tipo Cliente o Comercio. El cliente debe tener una cuenta principal activa.
+            Si el balance inicial es mayor que RD$0.00 se registra una transaccion inicial de tipo CREDITO.
+            </remarks>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.SavingsAccountController.GetTransactions(System.String,System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>Obtiene la cuenta y su historial de transacciones paginado.</summary>
+            <remarks>Las transacciones se devuelven de la mas reciente a la mas antigua.</remarks>
+            <param name="accountNumber">Numero identificador de 9 digitos de la cuenta.</param>
+            <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+            <param name="pageSize">Transacciones por pagina. Maximo 20.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.SavingsAccountController.Cancel(System.String,System.Threading.CancellationToken)">
+            <summary>Cancela una cuenta de ahorro secundaria activa.</summary>
+            <remarks>
+            Las cuentas principales no pueden cancelarse. Si la cuenta secundaria tiene balance
+            disponible, se transfiere automaticamente a la cuenta principal activa del mismo cliente
+            registrando un DEBITO en la secundaria y un CREDITO en la principal.
+            La cuenta nunca se elimina fisicamente ni pierde su historial.
+            </remarks>
+            <param name="accountNumber">Numero identificador de 9 digitos de la cuenta a cancelar.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="T:ArtemisBank.WebApi.Controllers.v1.UsersController">
+             <summary>
+             Gestion de usuarios desde la Web API.
+             Todos los endpoints requieren JWT y rol Administrador.
+            
+             Los usuarios creados por esta via nacen INACTIVOS y reciben un correo con el TOKEN de
+             activacion en el cuerpo del mensaje (no un enlace), porque la API no tiene pantallas
+             a las cuales redirigir.
+             </summary>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.UsersController.Get(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>Obtiene el listado paginado de usuarios.</summary>
+            <param name="page">Numero de pagina. Debe ser mayor que cero.</param>
+            <param name="pageSize">Registros por pagina. Maximo 20.</param>
+            <param name="role">Filtro opcional: Administrador, Cajero, Cliente o Comercio.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.UsersController.Post(ArtemisBank.Core.Application.Dtos.Users.CreateUserApiDto,System.Threading.CancellationToken)">
+             <summary>Crea un usuario con rol Administrador, Cajero o Cliente.</summary>
+             <remarks>
+             El usuario, el correo y la cedula deben ser unicos; si ya existen la respuesta es
+             409 Conflict.
+            
+             El usuario se crea inactivo y recibe por correo el token de activacion.
+             Si el rol es Cliente se genera automaticamente su cuenta de ahorro principal con un
+             numero unico de 9 digitos; si <c>initialAmount</c> es mayor que cero, ese balance
+             entra como una transaccion de tipo CREDITO.
+            
+             El rol Comercio no puede crearse aqui: use <c>POST /api/users/commerce/{commerceId}</c>.
+             </remarks>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.UsersController.PostCommerceUser(System.Int32,ArtemisBank.Core.Application.Dtos.Users.CreateCommerceUserApiDto,System.Threading.CancellationToken)">
+             <summary>Crea el usuario con rol Comercio de un comercio existente.</summary>
+             <remarks>
+             Cada comercio admite un unico usuario asociado. Si el comercio ya tiene uno,
+             la respuesta es 409 Conflict.
+            
+             Si el comercio aun no tiene cuenta de ahorro principal, se le genera una para que
+             pueda recibir los cobros de Hermes Pay.
+             </remarks>
+             <param name="commerceId">Identificador del comercio al que se asociara el usuario.</param>
+             <param name="request">Datos del usuario de comercio.</param>
+             <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.UsersController.Put(System.String,ArtemisBank.Core.Application.Dtos.Users.UpdateUserApiDto,System.Threading.CancellationToken)">
+             <summary>Actualiza los datos de un usuario.</summary>
+             <remarks>
+             El ROL no forma parte del cuerpo y no puede modificarse: cambiarlo dejaria huerfanos
+             los productos financieros ya asociados al usuario.
+            
+             Para clientes, un <c>additionalAmount</c> mayor que cero se acredita a su cuenta
+             principal como transaccion de tipo CREDITO.
+             </remarks>
+             <param name="id">Identificador del usuario.</param>
+             <param name="request">Datos actualizados.</param>
+             <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+        <member name="M:ArtemisBank.WebApi.Controllers.v1.UsersController.SetStatus(System.String,ArtemisBank.Core.Application.Dtos.Users.UserStatusApiDto,System.Threading.CancellationToken)">
+            <summary>Activa o inactiva un usuario.</summary>
+            <remarks>
+            Un usuario no puede activar ni inactivar su propia cuenta: el intento responde
+            403 Forbidden.
+            </remarks>
+            <param name="id">Identificador del usuario objetivo.</param>
+            <param name="request">Nuevo estado.</param>
+            <param name="cancellationToken">Token de cancelacion de la solicitud.</param>
+        </member>
+    </members>
+</doc>

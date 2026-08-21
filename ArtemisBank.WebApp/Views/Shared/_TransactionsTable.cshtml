@@ -1,0 +1,39 @@
+@model PagedResult<TransactionViewModel>
+<div class="table-responsive">
+    <table class="table table-sm table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>Fecha</th>
+                <th class="text-end">Monto</th>
+                <th>Tipo</th>
+                <th>Origen</th>
+                <th>Beneficiario</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Data.Any())
+        {
+            <tr><td colspan="6" class="text-center text-secondary py-3">No hay transacciones registradas.</td></tr>
+        }
+        else
+        {
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>@item.Date.ToString("dd/MM/yyyy hh:mm tt")</td>
+                    <td class="text-end fw-semibold @(item.IsCredit ? "text-success" : "text-danger")">
+                        RD$@item.Amount.ToString("N2")
+                    </td>
+                    <td><span class="badge @(item.IsCredit ? "bg-success" : "bg-danger")">@item.Type</span></td>
+                    <td>@item.Origin</td>
+                    <td>@item.Beneficiary</td>
+                    <td>
+                        <span class="badge @(item.IsApproved ? "bg-primary" : "bg-secondary")">@item.Status</span>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,260 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v9.0
+build_property.EntryPointFilePath = 
+build_property.RootNamespace = ArtemisBank.WebApp
+build_property.RootNamespace = ArtemisBank.WebApp
+build_property.ProjectDir = C:\Users\micha\OneDrive\Escritorio\proyecto final\clean proyecto 2\Artemis-Bank\ArtemisBank.WebApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = C:\Users\micha\OneDrive\Escritorio\proyecto final\clean proyecto 2\Artemis-Bank\ArtemisBank.WebApp
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/AdminHome/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5Ib21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Beneficiary/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVuZWZpY2lhcnlcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Beneficiary/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmVuZWZpY2lhcnlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CashAdvance/Confirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaEFkdmFuY2VcQ29uZmlybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CashAdvance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaEFkdmFuY2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/CardPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxDYXJkUGF5bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/Confirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxDb25maXJtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/Deposit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxEZXBvc2l0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/LoanPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxMb2FuUGF5bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/ThirdParty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxUaGlyZFBhcnR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Cashier/Withdrawal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaGllclxXaXRoZHJhd2FsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/ClientHome/AccountDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50SG9tZVxBY2NvdW50RGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/ClientHome/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50SG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/Assign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxBc3NpZ24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/Cancel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxDYW5jZWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/Created.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxDcmVhdGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/CreditCard/SelectClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3JlZGl0Q2FyZFxTZWxlY3RDbGllbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Home/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Loan/Assign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxBc3NpZ24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Loan/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Loan/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Loan/HighRiskWarning.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxIaWdoUmlza1dhcm5pbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Loan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Loan/SelectClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9hblxTZWxlY3RDbGllbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Login/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQWNjZXNzRGVuaWVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Login/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cRm9yZ290UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Login/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVzZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/SavingsAccount/Assign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2aW5nc0FjY291bnRcQXNzaWduLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/SavingsAccount/Cancel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2aW5nc0FjY291bnRcQ2FuY2VsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/SavingsAccount/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2aW5nc0FjY291bnRcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/SavingsAccount/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2aW5nc0FjY291bnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/SavingsAccount/SelectClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2F2aW5nc0FjY291bnRcU2VsZWN0Q2xpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_Alerts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BbGVydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_AuthLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BdXRoTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_Menu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW51LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_Pager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYWdlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_TransactionsTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UcmFuc2FjdGlvbnNUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transaction/Beneficiaries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cQmVuZWZpY2lhcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transaction/Confirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cQ29uZmlybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transaction/CreditCard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cQ3JlZGl0Q2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transaction/Express.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cRXhwcmVzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transaction/Loan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cTG9hbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transfer/Confirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNmZXJcQ29uZmlybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/Transfer/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNmZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/User/ChangeStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDaGFuZ2VTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/User/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/User/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/User/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/micha/OneDrive/Escritorio/proyecto final/clean proyecto 2/Artemis-Bank/ArtemisBank.WebApp/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

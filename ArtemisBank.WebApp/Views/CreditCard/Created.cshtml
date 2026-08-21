@@ -1,0 +1,37 @@
+@model CreatedCardViewModel
+@{ ViewData["Title"] = "Tarjeta emitida"; }
+
+<h1 class="h4 mb-3">Tarjeta de crédito emitida</h1>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Cliente</dt>
+            <dd class="col-sm-8">@Model.Card.ClientFullName</dd>
+
+            <dt class="col-sm-4">Número de tarjeta</dt>
+            <dd class="col-sm-8 font-monospace">@Model.Card.MaskedNumber</dd>
+
+            <dt class="col-sm-4">Límite de crédito</dt>
+            <dd class="col-sm-8">@Model.Card.CreditLimitDisplay</dd>
+
+            <dt class="col-sm-4">Fecha de expiración</dt>
+            <dd class="col-sm-8">@Model.Card.ExpirationDate</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="alert alert-warning">
+    <h2 class="h6"><i class="bi bi-shield-lock me-1"></i> Código de seguridad</h2>
+    <p class="mb-2">
+        Anótelo y entrégueselo al cliente ahora. Esta es la <strong>única vez</strong> que se muestra:
+        en la base de datos solo queda su hash, de modo que nadie —ni un administrador— puede
+        recuperarlo después.
+    </p>
+    <p class="display-6 font-monospace mb-0">@Model.Cvc</p>
+</div>
+
+<div class="d-flex gap-2">
+    <a class="btn btn-outline-secondary" asp-action="Index">Volver al listado</a>
+    <a class="btn btn-primary" asp-action="Details" asp-route-id="@Model.Card.Id">Ver detalles</a>
+</div>

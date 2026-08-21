@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "ArtemisBank.Core.Domain/1.0.0": {
+        "runtime": {
+          "ArtemisBank.Core.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ArtemisBank.Core.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

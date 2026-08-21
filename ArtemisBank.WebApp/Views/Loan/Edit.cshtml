@@ -1,0 +1,47 @@
+@model EditLoanRateViewModel
+@{ ViewData["Title"] = "Editar tasa de interés"; }
+
+<h1 class="h4 mb-3">Editar tasa de interés</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="LoanId" />
+            <input type="hidden" asp-for="LoanNumber" />
+            <input type="hidden" asp-for="ClientFullName" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+            <dl class="row">
+                <dt class="col-sm-3">Número de préstamo</dt>
+                <dd class="col-sm-9 font-monospace">@Model.LoanNumber</dd>
+
+                <dt class="col-sm-3">Cliente</dt>
+                <dd class="col-sm-9">@Model.ClientFullName</dd>
+            </dl>
+
+            <div class="mb-3 col-md-4">
+                <label class="form-label" asp-for="AnnualInterestRate"></label>
+
+                <input class="form-control" asp-for="AnnualInterestRate" type="number"
+                       step="any" min="0" max="100"
+                       value="@Rate.ForInput(Model.AnnualInterestRate)" />
+                <span class="text-danger small" asp-validation-for="AnnualInterestRate"></span>
+            </div>
+
+            <div class="alert alert-info small mb-3">
+                Solo se recalcularán las cuotas futuras que estén completamente pendientes.
+                Las cuotas pagadas, parcialmente pagadas o atrasadas no se modifican, y las
+                fechas de vencimiento pactadas se conservan.
+            </div>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
+                <button type="submit" class="btn btn-primary">Modificar tasa</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

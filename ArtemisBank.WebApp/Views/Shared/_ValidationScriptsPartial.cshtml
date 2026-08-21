@@ -1,0 +1,29 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@4.0.0/dist/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    // jQuery Validation trae sus mensajes por defecto en ingles ("This field is required").
+    // Aparecen cuando un atributo de validacion no define su propio mensaje, asi que se
+    // traducen aqui para que no quede ni una linea en ingles en la interfaz.
+    (function () {
+        if (!window.jQuery || !jQuery.validator) return;
+
+        jQuery.extend(jQuery.validator.messages, {
+            required: "Este campo es requerido.",
+            remote: "Por favor corrija este campo.",
+            email: "Introduzca un correo electrónico válido.",
+            url: "Introduzca una dirección web válida.",
+            date: "Introduzca una fecha válida.",
+            number: "Introduzca un número válido.",
+            digits: "Introduzca solamente dígitos.",
+            equalTo: "Introduzca el mismo valor de nuevo.",
+            maxlength: jQuery.validator.format("No introduzca más de {0} caracteres."),
+            minlength: jQuery.validator.format("Introduzca al menos {0} caracteres."),
+            rangelength: jQuery.validator.format("Introduzca entre {0} y {1} caracteres."),
+            range: jQuery.validator.format("Introduzca un valor entre {0} y {1}."),
+            max: jQuery.validator.format("Introduzca un valor menor o igual a {0}."),
+            min: jQuery.validator.format("Introduzca un valor mayor o igual a {0}."),
+            step: jQuery.validator.format("Introduzca un múltiplo de {0}.")
+        });
+    })();
+</script>

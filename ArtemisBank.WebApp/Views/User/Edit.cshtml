@@ -1,0 +1,84 @@
+@model EditUserViewModel
+@{ ViewData["Title"] = "Editar usuario"; }
+
+<h1 class="h4 mb-3">Editar usuario</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Role" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="FirstName"></label>
+                    <input class="form-control" asp-for="FirstName" />
+                    <span class="text-danger small" asp-validation-for="FirstName"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="LastName"></label>
+                    <input class="form-control" asp-for="LastName" />
+                    <span class="text-danger small" asp-validation-for="LastName"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Identification"></label>
+                    <input class="form-control" asp-for="Identification" data-cedula />
+                    <span class="text-danger small" asp-validation-for="Identification"></span>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Email"></label>
+                    <input class="form-control" asp-for="Email" type="email" />
+                    <span class="text-danger small" asp-validation-for="Email"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="UserName"></label>
+                    <input class="form-control" asp-for="UserName" />
+                    <span class="text-danger small" asp-validation-for="UserName"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Rol</label>
+                    <input class="form-control" value="@Model.Role" disabled />
+                    <div class="form-text">El rol no puede modificarse una vez creado el usuario.</div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="Password"></label>
+                    <input class="form-control" asp-for="Password" type="password" autocomplete="new-password" />
+                    <span class="text-danger small" asp-validation-for="Password"></span>
+                    <div class="form-text">Déjelo vacío para conservar la contraseña actual.</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" asp-for="ConfirmPassword"></label>
+                    <input class="form-control" asp-for="ConfirmPassword" type="password" autocomplete="new-password" />
+                    <span class="text-danger small" asp-validation-for="ConfirmPassword"></span>
+                </div>
+
+                @if (Model.IsClient)
+                {
+                    <div class="col-md-6">
+                        <label class="form-label" asp-for="AdditionalAmount"></label>
+                        <input class="form-control" asp-for="AdditionalAmount" type="number" step="0.01" min="0" />
+                        <span class="text-danger small" asp-validation-for="AdditionalAmount"></span>
+                        <div class="form-text">
+                            Se acredita a la cuenta principal del cliente y se registra como
+                            transacción de tipo crédito.
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

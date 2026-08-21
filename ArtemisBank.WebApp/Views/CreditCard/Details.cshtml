@@ -1,0 +1,93 @@
+@model CreditCardDetailDto
+@{ ViewData["Title"] = "Detalle de la tarjeta"; }
+
+<h1 class="h4 mb-3">Detalle de la tarjeta @Model.MaskedNumber</h1>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Cliente</dt>
+                    <dd class="col-sm-7">@Model.ClientFullName</dd>
+
+                    <dt class="col-sm-5">Cédula</dt>
+                    <dd class="col-sm-7 font-monospace">@Cedula.Format(Model.ClientIdentification)</dd>
+
+                    <dt class="col-sm-5">Número de tarjeta</dt>
+                    <dd class="col-sm-7 font-monospace">@Model.MaskedNumber</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Límite de crédito</dt>
+                    <dd class="col-sm-7">@Model.CreditLimitDisplay</dd>
+
+                    <dt class="col-sm-5">Monto adeudado</dt>
+                    <dd class="col-sm-7 fw-semibold">@Model.DebtDisplay</dd>
+
+                    <dt class="col-sm-5">Crédito disponible</dt>
+                    <dd class="col-sm-7">@Model.AvailableCreditDisplay</dd>
+
+                    <dt class="col-sm-5">Expiración</dt>
+                    <dd class="col-sm-7">@Model.ExpirationDate</dd>
+
+                    <dt class="col-sm-5">Estado</dt>
+                    <dd class="col-sm-7">
+                        <span class="badge @(Model.IsActive ? "bg-success" : "bg-secondary")">@Model.Status</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h5 mb-2">Consumos registrados</h2>
+<p class="text-secondary small">
+    Se listan tanto los consumos aprobados como los rechazados, del más reciente al más antiguo.
+</p>
+
+<div class="table-responsive">
+    <table class="table table-sm table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>Fecha del consumo</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th>Comercio</th>
+                <th class="text-end">Monto</th>
+                <th>Estado</th>
+                <th>Motivo del rechazo</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Consumptions.Any())
+        {
+            <tr><td colspan="7" class="text-center text-secondary py-4">Esta tarjeta no tiene consumos registrados.</td></tr>
+        }
+        else
+        {
+            @foreach (var consumption in Model.Consumptions)
+            {
+                <tr class="@(consumption.Status == DisplayText.ConsumptionRejected ? "table-warning" : "")">
+                    <td>@consumption.DateDisplay</td>
+                    <td>@consumption.Type</td>
+                    <td>@consumption.Description</td>
+                    <td>@(string.IsNullOrWhiteSpace(consumption.CommerceName) ? "—" : consumption.CommerceName)</td>
+                    <td class="text-end">@consumption.AmountDisplay</td>
+                    <td>
+                        <span class="badge @(consumption.Status == DisplayText.ConsumptionApproved ? "bg-success" : "bg-danger")">
+                            @consumption.Status
+                        </span>
+                    </td>
+                    <td class="small text-secondary">
+                        @(string.IsNullOrWhiteSpace(consumption.RejectionReason) ? "—" : consumption.RejectionReason)
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>

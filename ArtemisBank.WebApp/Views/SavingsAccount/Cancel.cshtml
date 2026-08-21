@@ -1,0 +1,30 @@
+@model CancelAccountViewModel
+@{ ViewData["Title"] = "Cancelar cuenta"; }
+
+<div class="card shadow-sm" style="max-width:640px">
+    <div class="card-body">
+        <h1 class="h5 mb-3">@Model.ConfirmationMessage</h1>
+
+        <dl class="row">
+            <dt class="col-sm-4">Cliente</dt><dd class="col-sm-8">@Model.ClientFullName</dd>
+            <dt class="col-sm-4">Balance disponible</dt><dd class="col-sm-8">RD$@Model.Balance.ToString("N2")</dd>
+        </dl>
+
+        @if (Model.Balance > 0m)
+        {
+            <div class="alert alert-info">
+                El balance disponible será transferido automáticamente a la cuenta principal del cliente,
+                registrando un DÉBITO en esta cuenta y un CRÉDITO en la principal.
+            </div>
+        }
+
+        <form method="post" asp-action="Cancel">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="accountNumber" value="@Model.AccountNumber" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger">Aceptar</button>
+                <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

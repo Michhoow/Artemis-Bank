@@ -1,0 +1,20 @@
+[
+  {
+    "name": "MarcarCuotasAtrasadas",
+    "scriptFile": "ArtemisBank.AzureFunctions.dll",
+    "entryPoint": "ArtemisBank.AzureFunctions.Functions.OverdueInstallmentsFunction.RunAsync",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "timer",
+        "direction": "In",
+        "type": "timerTrigger",
+        "schedule": "0 0 1 * * *",
+        "properties": {}
+      }
+    ]
+  }
+]

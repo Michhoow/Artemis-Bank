@@ -1,0 +1,49 @@
+@model BeneficiaryTransactionViewModel
+@{ ViewData["Title"] = "Transacción a beneficiarios"; }
+
+<h1 class="h4 mb-3">Transacción a beneficiarios</h1>
+
+<form method="post" asp-action="Beneficiaries" class="card card-body shadow-sm" style="max-width:640px">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="BeneficiaryId"></label>
+        <select class="form-select" asp-for="BeneficiaryId">
+            <option value="">Seleccione un beneficiario</option>
+            @foreach (var beneficiary in Model.Beneficiaries)
+            {
+                <option value="@beneficiary.Id">@beneficiary.AccountNumber — @beneficiary.FullName</option>
+            }
+        </select>
+        <span asp-validation-for="BeneficiaryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Amount"></label>
+        <div class="input-group">
+            <span class="input-group-text">RD$</span>
+            <input class="form-control" asp-for="Amount" type="number" step="0.01" min="0.01" />
+        </div>
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="SourceAccountNumber"></label>
+        <select class="form-select" asp-for="SourceAccountNumber">
+            <option value="">Seleccione una cuenta</option>
+            @foreach (var account in Model.SourceAccounts)
+            {
+                <option value="@account.AccountNumber">@account.Display</option>
+            }
+        </select>
+        <span asp-validation-for="SourceAccountNumber" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Continuar</button>
+        <a class="btn btn-outline-secondary" asp-controller="ClientHome" asp-action="Index">Cancelar</a>
+    </div>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

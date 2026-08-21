@@ -1,0 +1,41 @@
+@model AdminHomeViewModel
+@{ ViewData["Title"] = "Home del administrador"; }
+
+<h1 class="h4 mb-4">Indicadores generales del sistema</h1>
+
+<div class="row g-3">
+    @{
+        var indicators = new (string Label, string Value)[]
+        {
+            ("Total de transacciones históricas", Model.TotalHistoricTransactions.ToString("N0")),
+            ("Transacciones del día", Model.TodayTransactions.ToString("N0")),
+            ("Total de pagos históricos", Model.TotalHistoricPayments.ToString("N0")),
+            ("Pagos del día", Model.TodayPayments.ToString("N0")),
+            ("Clientes activos", Model.ActiveClients.ToString("N0")),
+            ("Clientes inactivos", Model.InactiveClients.ToString("N0")),
+            ("Total de productos financieros", Model.TotalFinancialProducts.ToString("N0")),
+            ("Préstamos vigentes", Model.ActiveLoans.ToString("N0")),
+            ("Tarjetas de crédito activas", Model.ActiveCreditCards.ToString("N0")),
+            ("Cuentas de ahorro activas", Model.ActiveSavingsAccounts.ToString("N0")),
+            ("Monto promedio de deuda por cliente", "RD$" + Model.AverageDebtPerClient.ToString("N2"))
+        };
+    }
+    @foreach (var indicator in indicators)
+    {
+        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+            <div class="card card-indicator shadow-sm h-100">
+                <div class="card-body">
+                    <div class="label">@indicator.Label</div>
+                    <div class="value">@indicator.Value</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="mt-4 d-flex flex-wrap gap-2">
+    <a class="btn btn-primary" asp-controller="SavingsAccount" asp-action="Index">Gestión de cuentas de ahorro</a>
+    <a class="btn btn-outline-primary" asp-controller="User" asp-action="Index">Gestión de usuarios</a>
+    <a class="btn btn-outline-primary" asp-controller="Loan" asp-action="Index">Gestión de préstamos</a>
+    <a class="btn btn-outline-primary" asp-controller="CreditCard" asp-action="Index">Gestión de tarjetas de crédito</a>
+</div>

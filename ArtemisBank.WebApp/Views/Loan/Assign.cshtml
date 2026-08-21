@@ -1,0 +1,60 @@
+@model AssignLoanViewModel
+@{ ViewData["Title"] = "Asignar préstamo"; }
+
+<h1 class="h4 mb-3">Asignar préstamo</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Assign">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="ClientId" />
+            <input type="hidden" asp-for="ClientDisplay" />
+            <input type="hidden" asp-for="ConfirmHighRisk" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+            <div class="mb-3">
+                <label class="form-label">Cliente</label>
+                <input class="form-control" value="@Model.ClientDisplay" readonly />
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="CapitalAmount"></label>
+                    <input class="form-control" asp-for="CapitalAmount" type="number" step="0.01" min="0.01" />
+                    <span class="text-danger small" asp-validation-for="CapitalAmount"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="TermInMonths"></label>
+                    <select class="form-select" asp-for="TermInMonths">
+                        @foreach (var term in Model.AllowedTerms)
+                        {
+                            <option value="@term" selected="@(Model.TermInMonths == term)">@term meses</option>
+                        }
+                    </select>
+                    <span class="text-danger small" asp-validation-for="TermInMonths"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" asp-for="AnnualInterestRate"></label>
+                    <input class="form-control" asp-for="AnnualInterestRate" type="number"
+                           step="any" min="0" max="100" />
+                    <span class="text-danger small" asp-validation-for="AnnualInterestRate"></span>
+                </div>
+            </div>
+
+            <p class="text-secondary small mt-3 mb-0">
+                La cuota se calcula por el sistema francés de amortización y el capital aprobado se
+                desembolsa en la cuenta de ahorro principal del cliente como transacción de tipo crédito.
+            </p>
+
+            <div class="mt-4 d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="SelectClient">Volver atrás</a>
+                <button type="submit" class="btn btn-primary">Asignar préstamo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

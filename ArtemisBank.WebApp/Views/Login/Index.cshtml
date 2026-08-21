@@ -1,0 +1,51 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Iniciar sesión";
+    Layout = "_AuthLayout";
+}
+
+<h2>Iniciar sesión</h2>
+<p class="lead-sub">Introduzca sus credenciales para entrar a su cuenta.</p>
+
+<form method="post" asp-action="Index" autocomplete="on">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 px-3 small"></div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="UserName"></label>
+        <div class="input-group">
+            <span class="input-group-text bg-white text-secondary">
+                <i class="bi bi-person"></i>
+            </span>
+            <input class="form-control border-start-0 ps-0" asp-for="UserName"
+                   autocomplete="username" autofocus placeholder="Su nombre de usuario" />
+        </div>
+        <span class="text-danger small" asp-validation-for="UserName"></span>
+    </div>
+
+    <div class="mb-2">
+        <label class="form-label" asp-for="Password"></label>
+        <div class="input-group">
+            <span class="input-group-text bg-white text-secondary">
+                <i class="bi bi-lock"></i>
+            </span>
+            <input class="form-control border-start-0 ps-0" asp-for="Password"
+                   type="password" autocomplete="current-password" placeholder="Su contraseña" />
+        </div>
+        <span class="text-danger small" asp-validation-for="Password"></span>
+    </div>
+
+    <div class="text-end mb-4 auth-links">
+        <a asp-action="ForgotPassword" class="text-decoration-none">¿Olvidó su contraseña?</a>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 auth-submit">Entrar</button>
+</form>
+
+<p class="text-secondary small mt-4 mb-0">
+    ¿Aún no tiene cuenta? Solicítela en cualquier sucursal: un administrador
+    la crea y usted recibirá un correo para activarla.
+</p>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

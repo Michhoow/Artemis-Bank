@@ -1,0 +1,69 @@
+@model SelectLoanClientViewModel
+@{ ViewData["Title"] = "Seleccionar cliente"; }
+
+<h1 class="h4 mb-3">Asignar préstamo — seleccionar cliente</h1>
+
+<form method="get" class="card card-body shadow-sm mb-3">
+    <div class="row g-2 align-items-end">
+        <div class="col-md-9">
+            <label class="form-label" for="identification">Cédula del cliente</label>
+            <input id="identification" name="identification" class="form-control" data-cedula
+                   value="@Model.Identification" placeholder="000-0000000-0" />
+        </div>
+        <div class="col-md-3 d-grid">
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.InfoMessage))
+{
+    <div class="alert alert-info">@Model.InfoMessage</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>Cliente</th>
+                <th>Cédula</th>
+                <th>Correo</th>
+                <th class="text-end">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Clients.Any())
+        {
+            <tr><td colspan="4" class="text-center text-secondary py-4">@AppMessages.ClientNotFoundByIdentification</td></tr>
+        }
+        else
+        {
+            @foreach (var client in Model.Clients)
+            {
+                <tr>
+                    <td>@client.FullName</td>
+                    <td class="font-monospace">@Cedula.Format(client.Identification)</td>
+                    <td>@client.Email</td>
+                    <td class="text-end">
+                        @if (client.HasActiveLoan)
+                        {
+                            <span class="badge bg-warning text-dark">Ya tiene un préstamo activo</span>
+                        }
+                        else if (!client.HasPrincipalAccount)
+                        {
+                            <span class="badge bg-secondary">Sin cuenta principal activa</span>
+                        }
+                        else
+                        {
+                            <a class="btn btn-sm btn-primary"
+                               asp-action="Assign" asp-route-clientId="@client.Id">Seleccionar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>

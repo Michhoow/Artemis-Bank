@@ -1,0 +1,70 @@
+@model CashAdvanceViewModel
+@{ ViewData["Title"] = "Avance de efectivo"; }
+
+<h1 class="h4 mb-3">Avance de efectivo</h1>
+
+@if (!Model.Cards.Any())
+{
+    <div class="alert alert-info">@AppMessages.AdvanceNoActiveCards</div>
+    <a class="btn btn-outline-secondary" asp-controller="ClientHome" asp-action="Index">Volver atrás</a>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post" asp-action="Index">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="CreditCardId"></label>
+                    <select class="form-select" asp-for="CreditCardId">
+                        <option value="">— Seleccione una tarjeta —</option>
+                        @foreach (var card in Model.Cards)
+                        {
+                            <option value="@card.Id" selected="@(Model.CreditCardId == card.Id)">
+                                @card.MaskedNumber — disponible @card.AvailableCreditDisplay
+                            </option>
+                        }
+                    </select>
+                    <span class="text-danger small" asp-validation-for="CreditCardId"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="TargetAccountNumber"></label>
+                    <select class="form-select" asp-for="TargetAccountNumber">
+                        <option value="">— Seleccione una cuenta —</option>
+                        @foreach (var account in Model.Accounts)
+                        {
+                            <option value="@account.AccountNumber"
+                                    selected="@(Model.TargetAccountNumber == account.AccountNumber)">
+                                @account.AccountNumber (@account.Type) — @Money.Format(account.Balance)
+                            </option>
+                        }
+                    </select>
+                    <span class="text-danger small" asp-validation-for="TargetAccountNumber"></span>
+                </div>
+
+                <div class="mb-3 col-md-5">
+                    <label class="form-label" asp-for="Amount"></label>
+                    <input class="form-control" asp-for="Amount" type="number" step="0.01" min="0.01" />
+                    <span class="text-danger small" asp-validation-for="Amount"></span>
+                </div>
+
+                <div class="alert alert-info small">
+                    A la tarjeta se le cargará el monto solicitado más un
+                    <strong>@Model.InterestRatePercent.ToString("N2") %</strong> de interés.
+                    A su cuenta se acredita únicamente el monto solicitado.
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-secondary" asp-controller="ClientHome" asp-action="Index">Volver atrás</a>
+                    <button type="submit" class="btn btn-primary">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

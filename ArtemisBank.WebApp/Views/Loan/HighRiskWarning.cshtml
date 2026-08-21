@@ -1,0 +1,38 @@
+@model HighRiskWarningViewModel
+@{ ViewData["Title"] = "Cliente de alto riesgo"; }
+
+<h1 class="h4 mb-3">Advertencia de riesgo crediticio</h1>
+
+<div class="alert alert-warning">
+    <i class="bi bi-exclamation-triangle me-1"></i>
+    @Model.Evaluation.Message
+</div>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-5">Deuda actual del cliente</dt>
+            <dd class="col-sm-7">@Model.CurrentDebtDisplay</dd>
+
+            <dt class="col-sm-5">Deuda proyectada con este préstamo</dt>
+            <dd class="col-sm-7 fw-semibold">@Model.ProjectedDebtDisplay</dd>
+
+            <dt class="col-sm-5">Deuda promedio del sistema</dt>
+            <dd class="col-sm-7">@Model.AverageDebtDisplay</dd>
+        </dl>
+    </div>
+</div>
+
+<form method="post" asp-action="ConfirmHighRisk">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Request.ClientId" name="ClientId" />
+    <input type="hidden" asp-for="Request.ClientDisplay" name="ClientDisplay" />
+    <input type="hidden" asp-for="Request.CapitalAmount" name="CapitalAmount" />
+    <input type="hidden" asp-for="Request.TermInMonths" name="TermInMonths" />
+    <input type="hidden" asp-for="Request.AnnualInterestRate" name="AnnualInterestRate" />
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+        <button type="submit" class="btn btn-warning">Confirmar asignación</button>
+    </div>
+</form>

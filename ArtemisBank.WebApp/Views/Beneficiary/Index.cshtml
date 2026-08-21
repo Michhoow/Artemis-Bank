@@ -1,0 +1,70 @@
+@model SaveBeneficiaryViewModel
+@{
+    ViewData["Title"] = "Beneficiarios";
+    var beneficiaries = ViewBag.Beneficiaries as List<BeneficiaryViewModel> ?? new List<BeneficiaryViewModel>();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Mis beneficiarios</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBeneficiary">
+        <i class="bi bi-plus-lg me-1"></i> Agregar beneficiario
+    </button>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr><th>Nombre</th><th>Apellido</th><th>Número de cuenta</th><th class="text-end">Acciones</th></tr>
+        </thead>
+        <tbody>
+        @if (!beneficiaries.Any())
+        {
+            <tr><td colspan="4" class="text-center text-secondary py-4">@AppMessages.NoBeneficiariesRegistered</td></tr>
+        }
+        else
+        {
+            @foreach (var beneficiary in beneficiaries)
+            {
+                <tr>
+                    <td>@beneficiary.FirstName</td>
+                    <td>@beneficiary.LastName</td>
+                    <td class="font-monospace">@beneficiary.AccountNumber</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-danger"
+                           asp-action="Delete" asp-route-id="@beneficiary.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade @(ViewData.ModelState.IsValid ? "" : "show")" id="addBeneficiary" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" asp-action="Create" class="modal-content">
+            @Html.AntiForgeryToken()
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar beneficiario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label" asp-for="AccountNumber"></label>
+                <input class="form-control" asp-for="AccountNumber" maxlength="9" placeholder="123456789" />
+                <span asp-validation-for="AccountNumber" class="text-danger"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <script>new bootstrap.Modal(document.getElementById('addBeneficiary')).show();</script>
+    }
+}

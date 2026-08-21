@@ -1,0 +1,42 @@
+@model ConfirmCashAdvanceViewModel
+@{ ViewData["Title"] = "Confirmar avance de efectivo"; }
+
+<h1 class="h4 mb-3">Confirmar avance de efectivo</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-5">Tarjeta de origen</dt>
+            <dd class="col-sm-7 font-monospace">@Model.CardMaskedNumber</dd>
+
+            <dt class="col-sm-5">Cuenta de destino</dt>
+            <dd class="col-sm-7 font-monospace">@Model.TargetAccountNumber</dd>
+
+            <dt class="col-sm-5">Monto que recibirá</dt>
+            <dd class="col-sm-7">@Model.AmountDisplay</dd>
+
+            <dt class="col-sm-5">Interés (6.25 %)</dt>
+            <dd class="col-sm-7">@Model.InterestDisplay</dd>
+
+            <dt class="col-sm-5">Total que se cargará a la tarjeta</dt>
+            <dd class="col-sm-7 fw-semibold">@Model.TotalChargedDisplay</dd>
+        </dl>
+
+        <div class="alert alert-warning">@AppMessages.ConfirmCashAdvance</div>
+
+        <form method="post" asp-action="Confirm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="CreditCardId" />
+            <input type="hidden" asp-for="CardMaskedNumber" />
+            <input type="hidden" asp-for="TargetAccountNumber" />
+            <input type="hidden" asp-for="Amount" />
+            <input type="hidden" asp-for="InterestAmount" />
+            <input type="hidden" asp-for="TotalCharged" />
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Confirmar avance</button>
+            </div>
+        </form>
+    </div>
+</div>

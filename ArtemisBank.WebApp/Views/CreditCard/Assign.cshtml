@@ -1,0 +1,40 @@
+@model AssignCreditCardViewModel
+@{ ViewData["Title"] = "Asignar tarjeta de crédito"; }
+
+<h1 class="h4 mb-3">Asignar tarjeta de crédito</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Assign">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="ClientId" />
+            <input type="hidden" asp-for="ClientDisplay" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none-if-empty"></div>
+
+            <div class="mb-3">
+                <label class="form-label">Cliente</label>
+                <input class="form-control" value="@Model.ClientDisplay" readonly />
+            </div>
+
+            <div class="mb-3 col-md-5">
+                <label class="form-label" asp-for="CreditLimit"></label>
+                <input class="form-control" asp-for="CreditLimit" type="number" step="0.01" min="0.01" />
+                <span class="text-danger small" asp-validation-for="CreditLimit"></span>
+            </div>
+
+            <div class="alert alert-info small">
+                El sistema generará automáticamente un número de 16 dígitos, la fecha de expiración
+                y el código de seguridad. El código de seguridad se mostrará una única vez al
+                terminar: no se almacena en texto plano y no podrá volver a consultarse.
+            </div>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-action="SelectClient">Volver atrás</a>
+                <button type="submit" class="btn btn-primary">Asignar tarjeta</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

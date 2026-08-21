@@ -1,0 +1,93 @@
+@model LoanDetailDto
+@{ ViewData["Title"] = "Detalle del préstamo"; }
+
+<h1 class="h4 mb-3">Detalle del préstamo @Model.LoanNumber</h1>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Número de préstamo</dt>
+                    <dd class="col-sm-7 font-monospace">@Model.LoanNumber</dd>
+
+                    <dt class="col-sm-5">Cliente</dt>
+                    <dd class="col-sm-7">@Model.ClientFullName</dd>
+
+                    <dt class="col-sm-5">Cédula</dt>
+                    <dd class="col-sm-7 font-monospace">@Cedula.Format(Model.ClientIdentification)</dd>
+
+                    <dt class="col-sm-5">Monto aprobado</dt>
+                    <dd class="col-sm-7">@Model.CapitalAmountDisplay</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Tasa de interés anual</dt>
+                    <dd class="col-sm-7">@Model.RateDisplay</dd>
+
+                    <dt class="col-sm-5">Plazo</dt>
+                    <dd class="col-sm-7">@Model.TermInMonths meses</dd>
+
+                    <dt class="col-sm-5">Cuota mensual</dt>
+                    <dd class="col-sm-7">@Model.MonthlyInstallmentDisplay</dd>
+
+                    <dt class="col-sm-5">Monto pendiente</dt>
+                    <dd class="col-sm-7 fw-semibold">@Model.PendingAmountDisplay</dd>
+
+                    <dt class="col-sm-5">Estado del préstamo</dt>
+                    <dd class="col-sm-7">
+                        <span class="badge @(Model.Status == "Activo" ? "bg-success" : "bg-secondary")">@Model.Status</span>
+                        <span class="badge @(Model.ClientPaymentStatus == DisplayText.LoanOverdue ? "bg-danger" : "bg-info text-dark")">
+                            @Model.ClientPaymentStatus
+                        </span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="h5 mb-2">Tabla de amortización</h2>
+
+<div class="table-responsive">
+    <table class="table table-sm table-hover align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th class="text-center">Cuota</th>
+                <th>Fecha de vencimiento</th>
+                <th class="text-end">Valor de la cuota</th>
+                <th class="text-end">Capital</th>
+                <th class="text-end">Interés</th>
+                <th class="text-end">Saldo pendiente</th>
+                <th>Estado de pago</th>
+                <th>Indicador de atraso</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var installment in Model.Installments)
+        {
+            <tr class="@(installment.IsOverdue ? "table-danger" : "")">
+                <td class="text-center">@installment.Number</td>
+                <td>@installment.DueDateDisplay</td>
+                <td class="text-end">@installment.TotalAmountDisplay</td>
+                <td class="text-end">@Money.Format(installment.CapitalAmount)</td>
+                <td class="text-end">@Money.Format(installment.InterestAmount)</td>
+                <td class="text-end fw-semibold">@installment.PendingAmountDisplay</td>
+                <td>
+                    <span class="badge @(installment.PaymentStatus == DisplayText.InstallmentPaid ? "bg-success" : installment.PaymentStatus == DisplayText.InstallmentPartiallyPaid ? "bg-warning text-dark" : "bg-secondary")">
+                        @installment.PaymentStatus
+                    </span>
+                </td>
+                <td>
+                    <span class="badge @(installment.IsOverdue ? "bg-danger" : "bg-light text-dark")">
+                        @installment.OverdueDisplay
+                    </span>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<a class="btn btn-outline-secondary" asp-action="Index">Volver atrás</a>
