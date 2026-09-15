@@ -2,10 +2,6 @@
 
 Sistema bancario construido con ASP.NET Core sobre .NET 9, siguiendo arquitectura Onion. Incluye una aplicación web MVC para administradores, cajeros y clientes, y una Web API REST para administradores y comercios, con el procesador de pagos Hermes Pay.
 
-Proyecto final de Programación 3.
-
----
-
 ## Integrantes
 
 | Nombre | Matrícula |
@@ -14,17 +10,30 @@ Proyecto final de Programación 3.
 | Montserrat Margarita Nunez De Leon | 2025-1379 |
 | Manuel Antonio Medrano Ortiz | 2024-2398 |
 
----
+## Capturas de pantalla
+
+| **Login** | **Dashboard Admin** |
+| :---: | :---: |
+| ![Login](https://github.com/user-attachments/assets/15bcf0a7-1fa4-4ffc-8ded-ca6c10971d7f) | ![Dashboard Admin](https://github.com/user-attachments/assets/e36c2174-8b7f-48ac-a71d-4efe1d824afa) | 
+
+| **Gestión de prestamos** | **Gestión de cuentas** |
+| :---: | :---: |
+| ![Gestion de prestamos](https://github.com/user-attachments/assets/4f5c7963-a93c-409f-beab-9772d4aa6b76) | ![Gestion de cuentas](https://github.com/user-attachments/assets/61ab73f6-53a4-4417-98c2-77e7e60781a9) |  
+
+| **Dashboard Cajero** | **Dashboard Cliente** |
+| :---: | :---: |
+| ![Dasboard cajero](https://github.com/user-attachments/assets/cf4ff993-45dd-49d5-83b3-a8b7b772bde0) | ![Dashboard cliente](https://github.com/user-attachments/assets/236c89c5-d23a-44b1-b0a9-a22c1780d424) 
+
 
 ## Funcionalidades
 
-**Administrador** — Indicadores del sistema, gestión de usuarios, préstamos, tarjetas de crédito y cuentas de ahorro.
+**Administrador**: Indicadores del sistema, gestión de usuarios, préstamos, tarjetas de crédito y cuentas de ahorro.
 
-**Cajero** — Indicadores del día, depósitos, retiros, pagos a tarjeta y préstamo, y transacciones a cuentas de terceros.
+**Cajero**: Indicadores del día, depósitos, retiros, pagos a tarjeta y préstamo, y transacciones a cuentas de terceros.
 
-**Cliente** — Consulta de productos financieros, beneficiarios, transacción express, pagos, avance de efectivo y transferencia entre cuentas propias.
+**Cliente**: Consulta de productos financieros, beneficiarios, transacción express, pagos, avance de efectivo y transferencia entre cuentas propias.
 
-**Comercio** — Cobros mediante Hermes Pay y consulta de sus transacciones, exclusivamente a través de la Web API.
+**Comercio**: Cobros mediante Hermes Pay y consulta de sus transacciones, exclusivamente a través de la Web API.
 
 ### Reglas de negocio implementadas
 
@@ -35,21 +44,20 @@ Proyecto final de Programación 3.
 - Operaciones transaccionales atómicas con registro cruzado de débito y crédito
 - Los intentos rechazados quedan registrados sin alterar los balances
 
----
 
 ## Arquitectura
 
 
 **Stack:** .NET 9, ASP.NET Core MVC y Web API, Entity Framework Core (Code First), ASP.NET Identity, JWT, MediatR, FluentValidation, AutoMapper, Serilog, Swagger, xUnit.
 
----
+
 
 ## Requisitos
 
 - SDK de .NET 9
 - SQL Server LocalDB o una instancia de SQL Server
 
----
+
 
 ## Cómo ejecutar
 
@@ -88,7 +96,7 @@ dotnet run --project ArtemisBank.WebApi
 
 Los roles y usuarios de prueba se crean automáticamente al iniciar la aplicación web.
 
----
+
 
 ## Usuarios de prueba
 
@@ -111,7 +119,7 @@ El rol Comercio no inicia sesión en la aplicación web. Según el documento fun
 
 El token incluye identificador de usuario, nombre de usuario, rol y expiración a las dos horas.
 
----
+
 
 ## Pruebas
 
@@ -121,7 +129,7 @@ dotnet test
 
 454 pruebas unitarias y de integración que cubren los 30 handlers CQRS de los siete módulos, los servicios de negocio, los validadores y los repositorios de persistencia e Identity.
 
----
+
 
 ## Configuración
 
@@ -130,3 +138,7 @@ La cadena de conexión y el resto de parámetros se definen en `appsettings.json
 El envío de correos requiere configurar la sección `MailSettings`. Por seguridad, el repositorio no incluye credenciales reales. Con `MailSettings` sin configurar, la aplicación funciona con normalidad y los envíos quedan registrados en el log.
 
 Los usuarios creados desde la aplicación nacen inactivos y requieren activación por correo. Un administrador también puede activarlos manualmente desde Gestión de usuarios.
+
+---
+
+Desarrollado como proyecto final para la materia de Programación 3 en el **Instituto Tecnológico de Las Américas (ITLA)**.

@@ -10,7 +10,7 @@
 }
 else
 {
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mx-auto" style="max-width:640px">
         <div class="card-body">
             <form method="post" asp-action="Index">
                 @Html.AntiForgeryToken()
@@ -68,3 +68,4 @@ else
 }
 
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }
+

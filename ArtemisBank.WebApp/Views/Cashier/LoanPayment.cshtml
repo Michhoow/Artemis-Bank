@@ -3,7 +3,7 @@
 
 <h1 class="h4 mb-3">Pago a préstamo</h1>
 
-<form method="post" asp-action="LoanPayment" class="card card-body shadow-sm" style="max-width:640px">
+<form method="post" asp-action="LoanPayment" class="card card-body shadow-sm mx-auto" style="max-width:640px">
     @Html.AntiForgeryToken()
     <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
 
@@ -35,3 +35,4 @@
 </form>
 
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }
+

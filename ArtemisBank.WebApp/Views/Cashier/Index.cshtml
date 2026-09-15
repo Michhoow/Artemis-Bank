@@ -1,35 +1,69 @@
 @model CashierHomeViewModel
-@{ ViewData["Title"] = "Home del cajero"; }
+@{ ViewData["Title"] = "Dashboard Cajero"; }
 
-<h1 class="h4 mb-4">Mis operaciones de hoy</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h4 mb-0">Operaciones de Hoy</h1>
+    <div class="text-muted small"><i class="bi bi-calendar3 me-1"></i> @DateTime.Now.ToString("dd MMMM yyyy")</div>
+</div>
 
-<div class="row g-3">
+<div class="row g-4 mb-5">
     @{
-        var indicators = new (string Label, int Value)[]
+        var indicators = new (string Label, int Value, string Icon, string ColorClass)[]
         {
-            ("Transacciones realizadas hoy", Model.TodayTransactions),
-            ("Pagos realizados hoy", Model.TodayPayments),
-            ("Depósitos realizados hoy", Model.TodayDeposits),
-            ("Retiros realizados hoy", Model.TodayWithdrawals)
+            ("Transacciones", Model.TodayTransactions, "bi-arrow-left-right", "text-primary"),
+            ("Pagos", Model.TodayPayments, "bi-credit-card", "text-warning"),
+            ("Depósitos", Model.TodayDeposits, "bi-box-arrow-in-down", "text-success"),
+            ("Retiros", Model.TodayWithdrawals, "bi-box-arrow-up", "text-danger")
         };
     }
     @foreach (var indicator in indicators)
     {
-        <div class="col-6 col-lg-3">
-            <div class="card card-indicator shadow-sm h-100">
-                <div class="card-body">
-                    <div class="label">@indicator.Label</div>
-                    <div class="value">@indicator.Value.ToString("N0")</div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                            <i class="bi @indicator.Icon fs-4 @indicator.ColorClass"></i>
+                        </div>
+                    </div>
+                    <h3 class="display-6 fw-bold mb-1 text-dark">@indicator.Value.ToString("N0")</h3>
+                    <p class="text-muted small text-uppercase mb-0" style="letter-spacing: 0.05em;">@indicator.Label</p>
                 </div>
             </div>
         </div>
     }
 </div>
 
-<div class="mt-4 d-flex flex-wrap gap-2">
-    <a class="btn btn-primary" asp-action="Deposit">Depósito</a>
-    <a class="btn btn-primary" asp-action="Withdrawal">Retiro</a>
-    <a class="btn btn-outline-primary" asp-action="CardPayment">Pago a tarjeta de crédito</a>
-    <a class="btn btn-outline-primary" asp-action="LoanPayment">Pago a préstamo</a>
-    <a class="btn btn-outline-primary" asp-action="ThirdParty">Transacciones a cuentas de terceros</a>
+<h5 class="mb-3 text-secondary">Operaciones Frecuentes</h5>
+<div class="row g-3">
+    <div class="col-md-6 col-xl-2 col-lg-4">
+        <a asp-action="Deposit" class="card h-100 text-decoration-none shadow-hover text-center p-4">
+            <i class="bi bi-box-arrow-in-down fs-1 text-success mb-2"></i>
+            <h6 class="text-dark fw-semibold mb-0">Depósito</h6>
+        </a>
+    </div>
+    <div class="col-md-6 col-xl-2 col-lg-4">
+        <a asp-action="Withdrawal" class="card h-100 text-decoration-none shadow-hover text-center p-4">
+            <i class="bi bi-box-arrow-up fs-1 text-danger mb-2"></i>
+            <h6 class="text-dark fw-semibold mb-0">Retiro</h6>
+        </a>
+    </div>
+    <div class="col-md-6 col-xl-3 col-lg-4">
+        <a asp-action="CardPayment" class="card h-100 text-decoration-none shadow-hover text-center p-4">
+            <i class="bi bi-credit-card fs-1 text-primary mb-2"></i>
+            <h6 class="text-dark fw-semibold mb-0">Pago a Tarjeta</h6>
+        </a>
+    </div>
+    <div class="col-md-6 col-xl-2 col-lg-4">
+        <a asp-action="LoanPayment" class="card h-100 text-decoration-none shadow-hover text-center p-4">
+            <i class="bi bi-cash-stack fs-1 text-warning mb-2"></i>
+            <h6 class="text-dark fw-semibold mb-0">Pago Préstamo</h6>
+        </a>
+    </div>
+    <div class="col-md-12 col-xl-3 col-lg-8">
+        <a asp-action="ThirdParty" class="card h-100 text-decoration-none shadow-hover text-center p-4">
+            <i class="bi bi-people fs-1 text-info mb-2"></i>
+            <h6 class="text-dark fw-semibold mb-0">Cuentas Terceros</h6>
+        </a>
+    </div>
 </div>

@@ -4,48 +4,57 @@
     Layout = "_AuthLayout";
 }
 
-<h2>Iniciar sesión</h2>
-<p class="lead-sub">Introduzca sus credenciales para entrar a su cuenta.</p>
+<div class="mb-4">
+    <h2>Iniciar sesión</h2>
+    <p class="lead-sub">Introduzca sus credenciales para entrar a su cuenta de manera segura.</p>
+</div>
 
 <form method="post" asp-action="Index" autocomplete="on">
     @Html.AntiForgeryToken()
 
-    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 px-3 small"></div>
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 px-3 small rounded-3"></div>
+
+    <div class="mb-4">
+        <label class="form-label text-secondary fw-semibold small mb-1" asp-for="UserName">Nombre de usuario</label>
+        <div class="input-group shadow-sm rounded-3">
+            <span class="input-group-text bg-white border-end-0 text-primary px-3">
+                <i class="bi bi-person fs-5"></i>
+            </span>
+            <input class="form-control border-start-0 ps-0 form-control-lg bg-white" asp-for="UserName"
+                   autocomplete="username" autofocus placeholder="Escriba su usuario" style="font-size: 0.95rem;"/>
+        </div>
+        <span class="text-danger small mt-1 d-block" asp-validation-for="UserName"></span>
+    </div>
 
     <div class="mb-3">
-        <label class="form-label" asp-for="UserName"></label>
-        <div class="input-group">
-            <span class="input-group-text bg-white text-secondary">
-                <i class="bi bi-person"></i>
+        <label class="form-label text-secondary fw-semibold small mb-1" asp-for="Password">Contraseña</label>
+        <div class="input-group shadow-sm rounded-3">
+            <span class="input-group-text bg-white border-end-0 text-primary px-3">
+                <i class="bi bi-lock fs-5"></i>
             </span>
-            <input class="form-control border-start-0 ps-0" asp-for="UserName"
-                   autocomplete="username" autofocus placeholder="Su nombre de usuario" />
+            <input class="form-control border-start-0 ps-0 form-control-lg bg-white" asp-for="Password"
+                   type="password" autocomplete="current-password" placeholder="••••••••" style="font-size: 0.95rem;"/>
         </div>
-        <span class="text-danger small" asp-validation-for="UserName"></span>
+        <span class="text-danger small mt-1 d-block" asp-validation-for="Password"></span>
     </div>
 
-    <div class="mb-2">
-        <label class="form-label" asp-for="Password"></label>
-        <div class="input-group">
-            <span class="input-group-text bg-white text-secondary">
-                <i class="bi bi-lock"></i>
-            </span>
-            <input class="form-control border-start-0 ps-0" asp-for="Password"
-                   type="password" autocomplete="current-password" placeholder="Su contraseña" />
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-2">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label small text-muted" for="rememberMe">Mantener sesión iniciada</label>
         </div>
-        <span class="text-danger small" asp-validation-for="Password"></span>
+        <a asp-action="ForgotPassword" class="text-decoration-none small fw-semibold text-primary">¿Olvidó su contraseña?</a>
     </div>
 
-    <div class="text-end mb-4 auth-links">
-        <a asp-action="ForgotPassword" class="text-decoration-none">¿Olvidó su contraseña?</a>
-    </div>
-
-    <button type="submit" class="btn btn-primary w-100 auth-submit">Entrar</button>
+    <button type="submit" class="btn btn-primary w-100 auth-submit shadow-sm rounded-3 py-3" style="font-size: 1rem;">
+        Entrar a mi cuenta <i class="bi bi-arrow-right ms-2"></i>
+    </button>
 </form>
 
-<p class="text-secondary small mt-4 mb-0">
-    ¿Aún no tiene cuenta? Solicítela en cualquier sucursal: un administrador
-    la crea y usted recibirá un correo para activarla.
+<p class="text-secondary small mt-5 mb-0 text-center">
+    ¿Aún no tiene cuenta? Solicítela en cualquier sucursal y recibirá un correo para activarla.
 </p>
 
-@section Scripts { <partial name="_ValidationScriptsPartial" /> }
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
