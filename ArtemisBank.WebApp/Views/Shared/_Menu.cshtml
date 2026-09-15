@@ -4,16 +4,9 @@
              : User.IsInRole(ArtemisRoles.Cliente) ? ArtemisRoles.Cliente
              : string.Empty;
 
-    // Controlador y accion actuales, para resaltar la seccion donde esta el usuario.
     var ctrlActual = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
     var accionActual = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
 
-    // Las etiquetas del menu son cortas a proposito: cada pantalla ya lleva su titulo
-    // completo ("Gestion de usuarios"). Repetirlo en la barra obligaba a partir el texto
-    // en dos lineas y desalineaba unos elementos respecto de otros.
-    // El rol Cajero tiene TODAS sus opciones en el mismo controlador y solo cambia la
-    // accion. Comparando unicamente el controlador, la marca se quedaba clavada en Inicio.
-    // Por eso, cuando se indica una accion, tambien tiene que coincidir.
     string Activo(string controlador, string? accion = null)
     {
         if (!string.Equals(ctrlActual, controlador, StringComparison.OrdinalIgnoreCase))
@@ -26,108 +19,98 @@
         return " active";
     }
 }
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-    <div class="container-fluid px-3 px-xl-4">
 
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-            <i class="bi bi-bank2"></i>
-            <span>Artemis Banking Pro</span>
-        </a>
+<aside class="sidebar">
+    <a class="sidebar-brand" asp-controller="Home" asp-action="Index">
+        <i class="bi bi-bank"></i>
+        <span>ArtemisBank</span>
+    </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#mainMenu" aria-controls="mainMenu"
-                aria-expanded="false" aria-label="Abrir menú de navegación">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="mainMenu">
-            <ul class="navbar-nav me-auto align-items-xl-center">
-                @if (role == ArtemisRoles.Administrador)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("AdminHome"))" asp-controller="AdminHome" asp-action="Index">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("User"))" asp-controller="User" asp-action="Index"
-                           title="Gestión de usuarios">Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Loan"))" asp-controller="Loan" asp-action="Index"
-                           title="Gestión de préstamos">Préstamos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("CreditCard"))" asp-controller="CreditCard" asp-action="Index"
-                           title="Gestión de tarjetas de crédito">Tarjetas de crédito</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("SavingsAccount"))" asp-controller="SavingsAccount" asp-action="Index"
-                           title="Gestión de cuentas de ahorro">Cuentas de ahorro</a>
-                    </li>
-                }
-                else if (role == ArtemisRoles.Cajero)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Cashier", "Index"))" asp-controller="Cashier" asp-action="Index">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Cashier", "Deposit"))" asp-controller="Cashier" asp-action="Deposit">Depósito</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Cashier", "Withdrawal"))" asp-controller="Cashier" asp-action="Withdrawal">Retiro</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Cashier", "CardPayment"))" asp-controller="Cashier" asp-action="CardPayment"
-                           title="Pago a tarjeta de crédito">Pago a tarjeta</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Cashier", "LoanPayment"))" asp-controller="Cashier" asp-action="LoanPayment"
-                           title="Pago a préstamo">Pago a préstamo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Cashier", "ThirdParty"))" asp-controller="Cashier" asp-action="ThirdParty"
-                           title="Transacciones a cuentas de terceros">Cuentas de terceros</a>
-                    </li>
-                }
-                else if (role == ArtemisRoles.Cliente)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("ClientHome"))" asp-controller="ClientHome" asp-action="Index">Inicio</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle@(Activo("Transaction"))" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">Transacciones</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Express">Express</a></li>
-                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="CreditCard">A tarjeta de crédito</a></li>
-                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Loan">A préstamo</a></li>
-                            <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Beneficiaries">A beneficiario</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Beneficiary"))" asp-controller="Beneficiary" asp-action="Index">Beneficiarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("CashAdvance"))" asp-controller="CashAdvance" asp-action="Index"
-                           title="Avance de efectivo">Avance de efectivo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link@(Activo("Transfer"))" asp-controller="Transfer" asp-action="Index">Transferencia</a>
-                    </li>
-                }
-            </ul>
-
-            @if (User.Identity?.IsAuthenticated ?? false)
-            {
-                <div class="navbar-user">
-                    <span class="navbar-user-info">
-                        <span class="navbar-user-name">@User.Identity!.Name</span>
-                        <span class="navbar-user-role">@role</span>
-                    </span>
-                    <a class="btn btn-sm btn-outline-light" asp-controller="Login" asp-action="SignOutSession">
-                        Cerrar sesión
-                    </a>
+    <nav class="sidebar-nav mt-3">
+        @if (role == ArtemisRoles.Administrador)
+        {
+            <div class="nav-section-title">Main Menu</div>
+            <a class="nav-link@(Activo("AdminHome"))" asp-controller="AdminHome" asp-action="Index">
+                <i class="bi bi-grid"></i> Dashboard
+            </a>
+            <a class="nav-link@(Activo("User"))" asp-controller="User" asp-action="Index">
+                <i class="bi bi-people"></i> Usuarios
+            </a>
+            
+            <div class="nav-section-title">Productos</div>
+            <a class="nav-link@(Activo("Loan"))" asp-controller="Loan" asp-action="Index">
+                <i class="bi bi-cash-stack"></i> Préstamos
+            </a>
+            <a class="nav-link@(Activo("CreditCard"))" asp-controller="CreditCard" asp-action="Index">
+                <i class="bi bi-credit-card"></i> Tarjetas
+            </a>
+            <a class="nav-link@(Activo("SavingsAccount"))" asp-controller="SavingsAccount" asp-action="Index">
+                <i class="bi bi-wallet2"></i> Cuentas
+            </a>
+        }
+        else if (role == ArtemisRoles.Cajero)
+        {
+            <div class="nav-section-title">Main Menu</div>
+            <a class="nav-link@(Activo("Cashier", "Index"))" asp-controller="Cashier" asp-action="Index">
+                <i class="bi bi-grid"></i> Inicio
+            </a>
+            
+            <div class="nav-section-title">Operaciones</div>
+            <a class="nav-link@(Activo("Cashier", "Deposit"))" asp-controller="Cashier" asp-action="Deposit">
+                <i class="bi bi-box-arrow-in-down"></i> Depósito
+            </a>
+            <a class="nav-link@(Activo("Cashier", "Withdrawal"))" asp-controller="Cashier" asp-action="Withdrawal">
+                <i class="bi bi-box-arrow-up"></i> Retiro
+            </a>
+            
+            <div class="nav-section-title">Pagos</div>
+            <a class="nav-link@(Activo("Cashier", "CardPayment"))" asp-controller="Cashier" asp-action="CardPayment">
+                <i class="bi bi-credit-card"></i> Pago Tarjeta
+            </a>
+            <a class="nav-link@(Activo("Cashier", "LoanPayment"))" asp-controller="Cashier" asp-action="LoanPayment">
+                <i class="bi bi-cash-stack"></i> Pago Préstamo
+            </a>
+            <a class="nav-link@(Activo("Cashier", "ThirdParty"))" asp-controller="Cashier" asp-action="ThirdParty">
+                <i class="bi bi-people"></i> Terceros
+            </a>
+        }
+        else if (role == ArtemisRoles.Cliente)
+        {
+            <div class="nav-section-title">Main Menu</div>
+            <a class="nav-link@(Activo("ClientHome"))" asp-controller="ClientHome" asp-action="Index">
+                <i class="bi bi-grid"></i> Dashboard
+            </a>
+            
+            <div class="nav-section-title">Transacciones</div>
+            <a class="nav-link@(Activo("Transaction", "Express"))" asp-controller="Transaction" asp-action="Express">
+                <i class="bi bi-lightning"></i> Express
+            </a>
+            <a class="nav-link@(Activo("Transfer"))" asp-controller="Transfer" asp-action="Index">
+                <i class="bi bi-arrow-left-right"></i> Transferencias
+            </a>
+            
+            <div class="nav-section-title">Otros</div>
+            <a class="nav-link@(Activo("CashAdvance"))" asp-controller="CashAdvance" asp-action="Index">
+                <i class="bi bi-cash"></i> Avance Efectivo
+            </a>
+            <a class="nav-link@(Activo("Beneficiary"))" asp-controller="Beneficiary" asp-action="Index">
+                <i class="bi bi-person-lines-fill"></i> Beneficiarios
+            </a>
+        }
+    </nav>
+    
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <div class="p-3 mt-auto">
+            <div class="card bg-light shadow-none border-0">
+                <div class="card-body p-3 d-flex align-items-center gap-3">
+                    <img src="https://ui-avatars.com/api/?name=@User.Identity.Name&background=0D7C85&color=fff" class="rounded-circle" width="36" height="36" alt="Avatar" />
+                    <div class="overflow-hidden">
+                        <div class="fw-semibold text-truncate" style="font-size: 0.85rem;">@User.Identity.Name</div>
+                        <div class="text-muted text-truncate" style="font-size: 0.75rem;">@role</div>
+                    </div>
                 </div>
-            }
+            </div>
         </div>
-    </div>
-</nav>
+    }
+</aside>
