@@ -1,5 +1,12 @@
 # Artemis Banking Pro (ABP)
 
+![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?style=flat&logo=dotnet)
+![C#](https://img.shields.io/badge/C%23-13.0-239120?style=flat&logo=csharp)
+![Architecture](https://img.shields.io/badge/Architecture-Onion%20%2F%20CQRS-blue)
+![Database](https://img.shields.io/badge/SQL%20Server-2022-CC292B?style=flat&logo=microsoftsqlserver)
+![Azure Functions](https://img.shields.io/badge/Azure-Functions-0089D6?style=flat&logo=microsoftazure)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker)
+
 Sistema bancario construido con ASP.NET Core sobre .NET 9, siguiendo arquitectura Onion. Incluye una aplicación web MVC para administradores, cajeros y clientes, y una Web API REST para administradores y comercios, con el procesador de pagos Hermes Pay.
 
 ## Integrantes
